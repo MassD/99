@@ -56,6 +56,7 @@ HINT: a palindrome is its own reverse.
 
 There is no nested list type in OCaml, so we need to define one first. A node of a nested list is either an element, or a list of nodes.
     
+	(* use this type in your code *)
     type 'a node =
       | One of 'a 
       | Many of 'a node list
@@ -88,6 +89,7 @@ Modify the result of the previous problem in such a way that if an element has n
 
 Since OCaml lists are homogeneous, one needs to define a type to hold both single elements and sub-lists.
 
+    (* use this type in your code *)
     type 'a rle =
       | One of 'a
       | Many of int * 'a
