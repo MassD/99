@@ -97,4 +97,43 @@ Since OCaml lists are homogeneous, one needs to define a type to hold both singl
     # encode ["a";"a";"a";"a";"b";"c";"c";"a";"a";"d";"e";"e";"e";"e"];;
     - : string rle list = [Many (4, "a"); One "b"; Many (2, "c"); Many (2, "a"); One "d";Many (4, "e")]
 
+##### 12. Decode a run-length encoded list. (medium)
+
+Given a run-length code list generated as specified in the previous problem, construct its uncompressed version.
+
+    # decode [Many (4,"a"); One "b"; Many (2,"c"); Many (2,"a"); One "d"; Many (4,"e")];;
+    - : string list = ["a"; "a"; "a"; "a"; "b"; "c"; "c"; "a"; "a"; "d"; "e"; "e"; "e"; "e"]
+	
+##### 13. Run-length encoding of a list (direct solution). (medium)
+
+Implement the so-called run-length encoding data compression method directly. I.e. don't explicitly create the sublists containing the duplicates, as in problem "Pack consecutive duplicates of list elements into sublists", but only count them. As in problem "Modified run-length encoding", simplify the result list by replacing the singleton lists (1 X) by X.
+
+    # encode ["a";"a";"a";"a";"b";"c";"c";"a";"a";"d";"e";"e";"e";"e"];;
+    - : string rle list = [Many (4, "a"); One "b"; Many (2, "c"); Many (2, "a"); One "d"; Many (4, "e")]
+
+##### 14. Duplicate the elements of a list. (easy)
+
+    # duplicate ["a";"b";"c";"c";"d"];;
+    - : string list = ["a"; "a"; "b"; "b"; "c"; "c"; "c"; "c"; "d"; "d"]
+
+##### 15. Replicate the elements of a list a given number of times. (medium)
+
+    # replicate ["a";"b";"c"] 3;;
+    - : string list = ["a"; "a"; "a"; "b"; "b"; "b"; "c"; "c"; "c"]
+	
+##### 16. Drop every N'th element from a list. (medium)
+
+    # drop ["a";"b";"c";"d";"e";"f";"g";"h";"i";"j"] 3;;
+    - : string list = ["a"; "b"; "d"; "e"; "g"; "h"; "j"]
+	
+##### 17. Split a list into two parts; the length of the first part is given. (easy)
+
+If the length of the first part is longer than the entire list, then the first part is the list and the second part is empty.
+
+    # split ["a";"b";"c";"d";"e";"f";"g";"h";"i";"j"] 3;;
+    - : string list * string list = (["a"; "b"; "c"], ["d"; "e"; "f"; "g"; "h"; "i"; "j"])
+    # split ["a";"b";"c";"d"] 5;;
+    - : string list * string list = (["a"; "b"; "c"; "d"], [])
+	
+
 
