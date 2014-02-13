@@ -184,5 +184,22 @@ The selected items shall be returned in a list. We use the Random module but do 
     # rand_select ["a";"b";"c";"d";"e";"f";"g";"h"] 3;;
     - : string list = ["g"; "d"; "a"]
 	
+##### 24. Lotto: Draw N different random numbers from the set 1..M. (easy)
 
+The selected numbers shall be returned in a list.
+
+    # lotto_select 6 49;;
+    - : int list = [10; 20; 44; 22; 41; 2]
+	
+##### 25. Generate a random permutation of the elements of a list. (easy)
+
+    # permutation ["a"; "b"; "c"; "d"; "e"; "f"];;
+    - : string list = ["a"; "e"; "f"; "b"; "d"; "c"]
+
+##### 26. Generate the combinations of K distinct objects chosen from the N elements of a list. (medium)
+
+In how many ways can a committee of 3 be chosen from a group of 12 people? We all know that there are C(12,3) = 220 possibilities (C(N,K) denotes the well-known binomial coefficients). For pure mathematicians, this result may be great. But we want to really generate all the possibilities in a list.
+
+    # extract 2 ["a";"b";"c";"d"];;
+    - : string list list = [["c"; "d"]; ["b"; "d"]; ["b"; "c"]; ["a"; "d"]; ["a"; "c"]; ["a"; "b"]]
 
