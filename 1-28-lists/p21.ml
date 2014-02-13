@@ -7,7 +7,12 @@ Start counting list elements with 0. If the position is larger or equal to the l
 *)
 
 let insert_at x k l =
-  List.fold_left (fun (acc,c) y -> if c = k then y::x::acc,c+1 else y::acc,c+1) ([],0) l |> fst |> List.rev
+  let rec aux acc i = function
+    | [] -> List.rev_append acc [x]
+    | hd::tl when i = k -> List.rev_append (x::acc) (hd::tl)
+    | hd::tl -> aux (hd::acc) (i+1) tl
+  in 
+  aux [] 0 l
 
 let x,k,l = "alfa",1,["a";"b";"c";"d"]
 let x1,k1,l1 = "alfa",3,["a";"b";"c";"d"]

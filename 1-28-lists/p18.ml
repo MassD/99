@@ -7,6 +7,13 @@ Given two indices, i and k, the slice is the list containing the elements betwee
 *)
 
 let slice l i j =
-  List.fold_left (fun (acc,c) x -> if i <= c && c <= j then x::acc,c+1 else acc,c+1) ([],0) l |> fst |> List.rev
+  let rec aux acc c = function
+    | [] -> List.rev acc
+    | hd::tl ->
+      if c < i then aux acc (c+1) tl
+      else if i <= c && c <= j then aux (hd::acc) (c+1) tl
+      else List.rev acc
+  in 
+  aux [] 0 l
 
 let l,i,j = ["a";"b";"c";"d";"e";"f";"g";"h";"i";"j"],2,6

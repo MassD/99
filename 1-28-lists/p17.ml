@@ -7,8 +7,12 @@ If the length of the first part is longer than the entire list, then the first p
 *)
 
 let split l n =
-  let a, b, _ = List.fold_left (fun (a,b,i) x -> if i < n then x::a,b,i+1 else a,x::b,i+1) ([],[],0) l in
-  List.rev a, List.rev b
+  let rec aux acc i = function
+    | [] -> List.rev acc, []
+    | hd::tl when i < n -> aux (hd::acc) (i+1) tl
+    | _ as l -> List.rev acc, l
+  in 
+  aux [] 0 l
 
 let l,k = ["a";"b";"c";"d";"e";"f";"g";"h";"i";"j"],3
 let l2,k2 = ["a";"b";"c";"d"],5
