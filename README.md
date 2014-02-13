@@ -135,5 +135,54 @@ If the length of the first part is longer than the entire list, then the first p
     # split ["a";"b";"c";"d"] 5;;
     - : string list * string list = (["a"; "b"; "c"; "d"], [])
 	
+##### 18. Extract a slice from a list. (medium)
+
+Given two indices, i and k, the slice is the list containing the elements between the i'th and k'th element of the original list (both limits included). Start counting the elements with 0 (this is the way the List module numbers elements).
+
+    # slice ["a";"b";"c";"d";"e";"f";"g";"h";"i";"j"] 2 6;;
+    - : string list = ["c"; "d"; "e"; "f"; "g"]
+
+##### 19. Rotate a list N places to the left. (medium)
+
+    # rotate ["a"; "b"; "c"; "d"; "e"; "f"; "g"; "h"] 3;;
+    - : string list = ["d"; "e"; "f"; "g"; "h"; "a"; "b"; "c"]
+    # rotate ["a"; "b"; "c"; "d"; "e"; "f"; "g"; "h"] (-2);;
+    - : string list = ["g"; "h"; "a"; "b"; "c"; "d"; "e"; "f"]
+
+
+##### 20. Remove the K'th element from a list. (easy)
+
+The first element of the list is numbered 0, the second 1,...
+
+    # remove_at 1 ["a";"b";"c";"d"];;
+    - : string list = ["a"; "c"; "d"]
+	
+##### 21. Insert an element at a given position into a list. (easy)
+
+Start counting list elements with 0. If the position is larger or equal to the length of the list, insert the element at the end. (The behavior is unspecified if the position is negative.)
+
+    # insert_at "alfa" 1 ["a";"b";"c";"d"];;
+    - : string list = ["a"; "alfa"; "b"; "c"; "d"]
+    # insert_at "alfa" 3 ["a";"b";"c";"d"];;
+    - : string list = ["a"; "b"; "c"; "alfa"; "d"]
+    # insert_at "alfa" 4 ["a";"b";"c";"d"];;
+    - : string list = ["a"; "b"; "c"; "d"; "alfa"]
+
+##### 22. Create a list containing all integers within a given range. (easy)
+
+If first argument is smaller than second, produce a list in decreasing order.
+
+    # range 4 9;;
+    - : int list = [4; 5; 6; 7; 8; 9]
+    # range 9 4;;
+    - : int list = [9; 8; 7; 6; 5; 4]
+
+##### 23. Extract a given number of randomly selected elements from a list. (medium)
+
+The selected items shall be returned in a list. We use the Random module but do not initialize it with Random.self_init for reproducibility.
+
+    # rand_select ["a";"b";"c";"d";"e";"f";"g";"h"] 3;;
+    - : string list = ["g"; "d"; "a"]
+	
 
 
