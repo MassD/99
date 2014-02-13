@@ -2,6 +2,8 @@
 
 The 99 problems are famous and have [Lisp version](http://www.ic.unicamp.br/~meidanis/courses/mc336/2006s2/funcional/L-99_Ninety-Nine_Lisp_Problems.html), [Prolog version](https://sites.google.com/site/prologsite/prolog-problems/), and [Haskell version](http://www.haskell.org/haskellwiki/99_questions), etc.
 
+This repositry structures the 99 problems first by their kinds and then further by their numbers. 
+
 ### Lists
 
 ##### 1. Write a function last : 'a list -> 'a option that returns the last element of a list. (easy)
