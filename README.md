@@ -4,6 +4,8 @@ The 99 problems are famous and have [Lisp version](http://www.ic.unicamp.br/~mei
 
 This README is basically a restructured version of [ocaml.org-99problems](http://ocaml.org/learn/tutorials/99problems.html)
 
+Though the problems number from 1 to 99, there are some gaps and some additions marked with letters. There are actually only 88 problems.
+
 ### Lists
 
 ##### 1. Write a function last : 'a list -> 'a option that returns the last element of a list. (easy)
@@ -223,5 +225,28 @@ B. Again, we suppose that a list contains elements that are lists themselves. Bu
     - : string list list = [["o"]; ["d"; "e"]; ["d"; "e"]; ["m"; "n"]; ["a"; "b"; "c"]; ["f"; "g"; "h"];["i"; "j"; "k"; "l"]]
     # frequency_sort [ ["a";"b";"c"]; ["d";"e"]; ["f";"g";"h"]; ["d";"e"];["i";"j";"k";"l"]; ["m";"n"]; ["o"] ];;
     - : string list list = [["i"; "j"; "k"; "l"]; ["o"]; ["a"; "b"; "c"]; ["f"; "g"; "h"]; ["d"; "e"];["d"; "e"]; ["m"; "n"]]
+
+### Arithmetic
+
+##### 31. Determine whether a given integer number is prime. (medium)
+
+    # not(is_prime 1);;
+    - : bool = true
+    # is_prime 7;;
+    - : bool = true
+    # not (is_prime 12);;
+
+##### 32. Determine the greatest common divisor of two positive integer numbers. (medium)
+
+Use Euclid's algorithm.
+
+    # gcd 13 27;;
+    - : int = 1
+    # gcd 20536 7826;;
+    - : int = 2
+	
+
+
+
 	
 
