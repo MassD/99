@@ -210,7 +210,7 @@ In how many ways can a committee of 3 be chosen from a group of 12 people? We al
 2. Generalize the above function in a way that we can specify a list of group sizes and the function will return a list of groups.
 
 
-    # group ["a";"b";"c";"d"] [2;1];;
+    # group ["a";"b";"c";"d"]  [2;1];;
     - : string list list list =[[["a"; "b"]; ["c"]]; [["a"; "c"]; ["b"]]; [["b"; "c"]; ["a"]];[["a"; "b"]; ["d"]]; [["a"; "c"]; ["d"]]; [["b"; "c"]; ["d"]];[["a"; "d"]; ["b"]]; [["b"; "d"]; ["a"]]; [["a"; "d"]; ["c"]];[["b"; "d"]; ["c"]]; [["c"; "d"]; ["a"]]; [["c"; "d"]; ["b"]]]
 	
 ##### 28. Sorting a list of lists according to length of sublists. (medium)
