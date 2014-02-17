@@ -340,5 +340,7 @@ We suppose a set of symbols with their frequencies, given as a list of `Fr(S,F)`
 
 Our objective is to construct a list `Hc(S,C)` terms, where `C` is _the Huffman code word_ for the symbol `S`. 
 
-In our example, the result could be hs = [Hc(a,'0'); Hc(b,'101'); Hc(c,'100'); Hc(d,'111'); Hc(e,'1101'); hc(f,'1100')] [hc(a,'01'),...etc.]. The task shall be performed by the function huffman defined as follows: huffman(fs) returns the Huffman code table for the frequency table fs
+In our example, the result could be `hs = [Hc(a,'0'); Hc(b,'101'); Hc(c,'100'); Hc(d,'111'); Hc(e,'1101'); hc(f,'1100')]` or `[hc(a,'01'),...etc.]`. 
+
+The task shall be performed by the function huffman defined as follows: huffman(fs) returns the Huffman code table for the frequency table fs
 
