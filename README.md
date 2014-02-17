@@ -344,3 +344,5 @@ In our example, the result could be `hs = [Hc(a,'0'); Hc(b,'101'); Hc(c,'100'); 
 
 The task shall be performed by the function huffman defined as follows: huffman(fs) returns the Huffman code table for the frequency table fs
 
+    # huffman [('a',45);('b',13);('c',12);('d',16);('e',9);('f',5)]
+    - char * string list = [('a',"0");('b',"101");('c',"100");('d',"111");('e',"1101");('f',"1100")]
