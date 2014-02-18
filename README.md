@@ -346,3 +346,26 @@ The task shall be performed by the function huffman defined as follows: huffman(
 
     # huffman [('a',45);('b',13);('c',12);('d',16);('e',9);('f',5)]
     - char * string list = [('a',"0");('b',"101");('c',"100");('d',"111");('e',"1101");('f',"1100")]
+
+### Binary Trees
+
+A binary tree is either empty or it is composed of a root element and two successors, which are binary trees themselves.
+
+In OCaml, one can define a new type `binary_tree` that carries an arbitrary value of type `'a` at each node.
+
+    type 'a binary_tree =
+      | Empty
+      | Node of 'a * 'a binary_tree * 'a binary_tree
+	  
+An example of tree carrying char data is:
+
+    # let example_tree = 
+		Node('a', Node('b', Node('d', Empty, Empty), Node('e', Empty, Empty)),
+         Node('c', Empty, Node('f', Node('g', Empty, Empty), Empty)));;
+    - val example_tree : char binary_tree =
+		Node ('a', Node ('b', Node ('d', Empty, Empty), Node ('e', Empty, Empty)),
+		Node ('c', Empty, Node ('f', Node ('g', Empty, Empty), Empty)))
+		
+In OCaml, the strict type discipline guarantees that, if you get a value of type `binary_tree`, then it must have been created with the two constructors `Empty` and `Node`.
+   
+##### 51.
