@@ -76,14 +76,12 @@ let freq = function Leaf (_,f) -> f | Node (_,_,f) -> f
 let huffman fs =
   let fh = List.fold_left (fun acc (c,fc) -> add fc (Leaf (c,fc)) acc) empty_heap fs in
   let rec fold = function
-    | Empty -> (print_endline "empty";raise Empty_heap)
+    | Empty -> raise Empty_heap
     | Node (Empty,_,root,Empty,_) -> root
     | h -> (
-      print_endline "not empty";
       let (fx,x) = min h in 
       let h = remove_min h in
       let (fy,y) = min h in
-      Printf.printf "fx = %d, fy = %d" fx fy;
       let new_node = merge_huffman x y in
       fold (add (freq new_node) new_node (remove_min h)))
   in 
