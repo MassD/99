@@ -368,10 +368,23 @@ An example of tree carrying char data is:
 		
 In OCaml, the strict type discipline guarantees that, if you get a value of type `binary_tree`, then it must have been created with the two constructors `Empty` and `Node`.
    
-##### 51.Construct completely balanced binary trees. (medium)
+##### 55.Construct completely balanced binary trees. (medium)
 
 In a completely balanced binary tree, the following property holds for every node: The number of nodes in its left subtree and the number of nodes in its right subtree are almost equal, which means their difference is not greater than one.
 
 Write a function cbal_tree to construct completely balanced binary trees for a given number of nodes. The function should generate all solutions via backtracking. Put the letter 'x' as information into all nodes of the tree.
+
+    # cbal_tree 4;;
+    - : char binary_tree list = [Node ('x', Node ('x', Empty, Empty), Node ('x', Node ('x', Empty, Empty), Empty)); Node ('x', Node ('x', Empty, Empty),Node ('x', Empty, Node ('x', Empty, Empty))); Node ('x', Node ('x', Node ('x', Empty, Empty), Empty),Node ('x', Empty, Empty)); Node ('x', Node ('x', Empty, Node ('x', Empty, Empty)),Node ('x', Empty, Empty))]
+    # List.length(cbal_tree 40);;
+    - : int = 524288
+
+##### 56. Symmetric binary trees. (medium)
+
+Let us call a binary tree symmetric if you can draw a vertical line through the root node and then the right subtree is the mirror image of the left subtree. Write a function `is_symmetric` to check whether a given binary tree is symmetric.
+
+Hint: Write a function `is_mirror` first to check whether one tree is the mirror image of another. We are only interested in the structure, not in the contents of the nodes.
+
+
 
 

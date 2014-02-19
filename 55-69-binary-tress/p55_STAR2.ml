@@ -13,11 +13,6 @@ type 'a bst = Empty | Node of 'a * 'a bst * 'a bst
 let singleton = Node ('X', Empty, Empty)
 
 let cbal_tree n = 
-  let add_node (x,lh,rh) =
-    match x with 
-      | Empty -> [singleton]
-      | Node (_,l,r) -> 
-  let rec build i acc =
-    if i >= n-1 then 
+  
 
 
