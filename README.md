@@ -290,4 +290,153 @@ See problem "Calculate Euler's totient function φ(m)" for the definition of Eul
     - : int = 4
     # phi_improved 13;;
     - : int = 12
+	
+##### 38. Compare the two methods of calculating Euler's totient function. (easy)
+
+Use the solutions of problems "Calculate Euler's totient function φ(m)" and "Calculate Euler's totient function φ(m) (improved)" to compare the algorithms. Take the number of logical inferences as a measure for efficiency. Try to calculate φ(10090) as an example.	
+
+    # timeit phi 10090;;
+    - : float = 0.00580191612243652344
+    # timeit phi_improved 10090;;
+    - : float = 7.08103179931640625e-05
+	
+##### 39. A list of prime numbers. (easy)
+
+Given a range of integers by its lower and upper limit, construct a list of all prime numbers in that range.
+
+    # List.length (all_primes 2 7920);;
+    - : int = 1000
+
+##### 40. Goldbach's conjecture. (medium)
+
+Goldbach's conjecture says that every positive even number greater than 2 is the sum of two prime numbers. Example: 28 = 5 + 23. It is one of the most famous facts in number theory that has not been proved to be correct in the general case. It has been numerically confirmed up to very large numbers. Write a function to find the two prime numbers that sum up to a given even integer.
+
+    # goldbach 28;;
+    - : int * int = (5, 23)
+
+##### 41. A list of Goldbach compositions. (medium)
+
+Given a range of integers by its lower and upper limit, print a list of all even numbers and their Goldbach composition.
+
+In most cases, if an even number is written as the sum of two prime numbers, one of them is very small. Very rarely, the primes are both bigger than say 50. Try to find out how many such cases there are in the range 2..3000.
+
+    # goldbach_list 9 20;;
+    - : (int * (int * int)) list = [(10, (3, 7)); (12, (5, 7)); (14, (3, 11)); (16, (3, 13)); (18, (5, 13)); (20, (3, 17))]
+    # goldbach_limit 1 2000 50;;
+    - : (int * (int * int)) list = [(992, (73, 919)); (1382, (61, 1321)); (1856, (67, 1789)); (1928, (61, 1867))]
+	
+### Logic and Codes
+
+Let us define a small "language" for boolean expressions containing variables:
+
+    type bool_expr =
+      | Var of string
+      | Not of bool_expr
+      | And of bool_expr * bool_expr
+      | Or of bool_expr * bool_expr
+
+A logical expression in two variables can then be written in prefix notation. For example, (a ∨ b) ∧ (a ∧ b) is written:
+
+    # And(Or(Var "a", Var "b"), And(Var "a", Var "b"));;
+    - : bool_expr = And (Or (Var "a", Var "b"), And (Var "a", Var "b"))
+
+##### 46. Truth tables for logical expressions (2 variables). (medium)
+
+Define a function, table2 which returns the truth table of a given logical expression in two variables (specified as arguments). The return value must be a list of triples containing (value\_of\_a, value\_of\_b, value\_of\_expr).
+
+    # table2 "a" "b" (And(Var "a", Or(Var "a", Var "b")));;
+    - : (bool * bool * bool) list = [(true, true, true); (true, false, true); (false, true, false);(false, false, false)]
+	
+##### 47. Truth tables for logical expressions. (medium)
+
+Generalize the previous problem in such a way that the logical expression may contain any number of logical variables. Define table in a way that table variables expr returns the truth table for the expression expr, which contains the logical variables enumerated in variables.
+
+    # table ["a"; "b"] (And(Var "a", Or(Var "a", Var "b")));;
+    - : ((string * bool) list * bool) list = 
+		  [([("a", true); ("b", true)], true);
+		   ([("a", true); ("b", false)], true);
+		   ([("a", false); ("b", true)], false); 
+		   ([("a", false); ("b", false)], false)]
+    # let a = Var "a" and b = Var "b" and c = Var "c" in 
+	  table ["a"; "b"; "c"] (Or(And(a, Or(b,c)), Or(And(a,b), And(a,c))));;
+    - : ((string * bool) list * bool) list =
+		[([("a", true); ("b", true); ("c", true)], true);
+		 ([("a", true); ("b", true); ("c", false)], true);
+		 ([("a", true); ("b", false); ("c", true)], true);
+		 ([("a", true); ("b", false); ("c", false)], false);
+		 ([("a", false); ("b", true); ("c", true)], false);
+		 ([("a", false); ("b", true); ("c", false)], false);
+		 ([("a", false); ("b", false); ("c", true)], false);
+		 ([("a", false); ("b", false); ("c", false)], false)]
+
+##### 48. Gray code. (medium)
+
+An n-bit Gray code is a sequence of n-bit strings constructed according to certain rules. For example,
+
+    n = 1: C(1) = ['0','1'].
+    n = 2: C(2) = ['00','01','11','10'].
+    n = 3: C(3) = ['000','001','011','010',´110´,´111´,´101´,´100´].
+
+Find out the construction rules and write a function with the following specification: gray n returns the n-bit Gray code.
+
+    # gray 1;;
+    - : string list = ["0"; "1"]
+    # gray 2;;
+    - : string list = ["00"; "01"; "10"; "11"]
+    # gray 3;;
+    - : string list = ["000"; "001"; "010"; "011"; "100"; "101"; "110"; "111"]
+
+##### 49. Huffman code. (hard)
+
+First of all, consult a good book on discrete mathematics or algorithms for a detailed description of Huffman codes (you can start with the [Wikipedia page](http://en.wikipedia.org/wiki/Huffman_coding))!
+
+We suppose a set of symbols with their frequencies, given as a list of `Fr(S,F)` terms, such as `fs = [Fr(a,45); Fr(b,13); Fr(c,12); Fr(d,16); Fr(e,9); Fr(f,5)]`. 
+
+Our objective is to construct a list `Hc(S,C)` terms, where `C` is _the Huffman code word_ for the symbol `S`. 
+
+In our example, the result could be `hs = [Hc(a,'0'); Hc(b,'101'); Hc(c,'100'); Hc(d,'111'); Hc(e,'1101'); hc(f,'1100')]` or `[hc(a,'01'),...etc.]`. 
+
+The task shall be performed by the function huffman defined as follows: huffman(fs) returns the Huffman code table for the frequency table fs
+
+    # huffman [('a',45);('b',13);('c',12);('d',16);('e',9);('f',5)]
+    - char * string list = [('a',"0");('b',"101");('c',"100");('d',"111");('e',"1101");('f',"1100")]
+
+### Binary Trees
+
+A binary tree is either empty or it is composed of a root element and two successors, which are binary trees themselves.
+
+In OCaml, one can define a new type `binary_tree` that carries an arbitrary value of type `'a` at each node.
+
+    type 'a binary_tree =
+      | Empty
+      | Node of 'a * 'a binary_tree * 'a binary_tree
+	  
+An example of tree carrying char data is:
+
+    # let example_tree = 
+		Node('a', Node('b', Node('d', Empty, Empty), Node('e', Empty, Empty)),
+         Node('c', Empty, Node('f', Node('g', Empty, Empty), Empty)));;
+    - val example_tree : char binary_tree =
+		Node ('a', Node ('b', Node ('d', Empty, Empty), Node ('e', Empty, Empty)),
+		Node ('c', Empty, Node ('f', Node ('g', Empty, Empty), Empty)))
+		
+In OCaml, the strict type discipline guarantees that, if you get a value of type `binary_tree`, then it must have been created with the two constructors `Empty` and `Node`.
+   
+##### 55.Construct completely balanced binary trees. (medium)
+
+In a completely balanced binary tree, the following property holds for every node: The number of nodes in its left subtree and the number of nodes in its right subtree are almost equal, which means their difference is not greater than one.
+
+Write a function cbal_tree to construct completely balanced binary trees for a given number of nodes. The function should generate all solutions via backtracking. Put the letter 'x' as information into all nodes of the tree.
+
+    # cbal_tree 4;;
+    - : char binary_tree list = [Node ('x', Node ('x', Empty, Empty), Node ('x', Node ('x', Empty, Empty), Empty)); Node ('x', Node ('x', Empty, Empty),Node ('x', Empty, Node ('x', Empty, Empty))); Node ('x', Node ('x', Node ('x', Empty, Empty), Empty),Node ('x', Empty, Empty)); Node ('x', Node ('x', Empty, Node ('x', Empty, Empty)),Node ('x', Empty, Empty))]
+    # List.length(cbal_tree 40);;
+    - : int = 524288
+
+##### 56. Symmetric binary trees. (medium)
+
+Let us call a binary tree symmetric if you can draw a vertical line through the root node and then the right subtree is the mirror image of the left subtree. Write a function `is_symmetric` to check whether a given binary tree is symmetric.
+
+Hint: Write a function `is_mirror` first to check whether one tree is the mirror image of another. We are only interested in the structure, not in the contents of the nodes.
+
 
