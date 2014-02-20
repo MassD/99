@@ -496,7 +496,7 @@ Here are the problems that I think harder or much harder than 99 problems in OCa
 
 ##### p55+ Construct completely balanced binary trees based on constraint of height. (medium)
 
-This problem is an extension of _problem 55_ and different from _problem 59_. `Note the difference of constraints and given number`
+This problem is an extension of _problem 55_ and different from _problem 59_. _Note the difference of constraints and given number_
 
 In a height-balanced binary tree, the following property holds for every node: The `height` of its left subtree and the height of its right subtree are almost equal, which means their difference is not greater than one.
 
