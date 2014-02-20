@@ -487,6 +487,12 @@ Write a function hbal_tree to construct height-balanced binary trees for a given
     - : bool = true
     # List.length t;;
     - : int = 15
+	
+##### 60. Construct height-balanced binary trees with a given number of nodes. (medium)
+
+Consider a height-balanced binary tree of height h. What is the maximum number of nodes it can contain? 
+
+Clearly, maxN = 2h - 1. However, what is the minimum number minN? This question is more difficult. Try to find a recursive statement and turn it into a function min\_nodes defined as follows: min_nodes h returns the minimum number of nodes in a height-balanced binary tree of height h.
 
 ## 99+ problems in OCaml
 
@@ -494,10 +500,4 @@ Here are the problems that I think harder or much harder than 99 problems in OCa
 
 ### Binary Trees
 
-##### p55+ Construct completely balanced binary trees based on constraint of height. (medium)
-
-This problem is an extension of _problem 55_ and different from _problem 59_. _Note the difference of constraints and given number_
-
-In a height-balanced binary tree, the following property holds for every node: The `height` of its left subtree and the height of its right subtree are almost equal, which means their difference is not greater than one.
-
-Write a function `bal_trees_height` to construct height-balanced binary trees for `a given number of nodes`. The function should generate all solutions via backtracking. Put the letter 'x' as information into all nodes of the tree.
+##### 
