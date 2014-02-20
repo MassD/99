@@ -498,6 +498,9 @@ B. On the other hand, we might ask: what is the maximum height H a height-balanc
 
 C. Now, we can attack the main problem: construct all the height-balanced binary trees with a given nuber of nodes. `hbal_tree_nodes n` returns a list of all height-balanced binary tree with n nodes.
 
+    # List.length(hbal_tree_nodes 15);;
+    - : int = 1553
+
 ## 99+ problems in OCaml
 
 Here are the problems that I think harder or much harder than 99 problems in OCaml, but definitely worth thinking.
