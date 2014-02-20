@@ -492,12 +492,19 @@ Write a function hbal_tree to construct height-balanced binary trees for a given
 
 Consider a height-balanced binary tree of height h. What is the maximum number of nodes it can contain? 
 
-Clearly, maxN = 2h - 1. However, what is the minimum number minN? This question is more difficult. Try to find a recursive statement and turn it into a function min\_nodes defined as follows: min_nodes h returns the minimum number of nodes in a height-balanced binary tree of height h.
+A. Clearly, maxN = 2h - 1. However, what is the minimum number minN? This question is more difficult. Try to find a recursive statement and turn it into a function `min_nodes` defined as follows: `min_nodes h` returns the minimum number of nodes in a height-balanced binary tree of height h.
+
+B. On the other hand, we might ask: what is the maximum height H a height-balanced binary tree with N nodes can have? `max_height n` returns the maximum height of a height-balanced binary tree with n nodes.
+
+C. Now, we can attack the main problem: construct all the height-balanced binary trees with a given nuber of nodes. `hbal_tree_nodes n` returns a list of all height-balanced binary tree with n nodes.
 
 ## 99+ problems in OCaml
 
 Here are the problems that I think harder or much harder than 99 problems in OCaml, but definitely worth thinking.
 
-### Binary Trees
+### List
 
-##### 
+### Max
+
+### Binary Trees
+ 
