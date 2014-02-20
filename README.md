@@ -439,6 +439,38 @@ Let us call a binary tree symmetric if you can draw a vertical line through the 
 
 Hint: Write a function `is_mirror` first to check whether one tree is the mirror image of another. We are only interested in the structure, not in the contents of the nodes.
 
+##### 57. Binary search trees (dictionaries). (medium)
+
+A. Construct a binary search tree from a list of integer numbers.
+
+    # construct [3;2;5;7;1];;
+    - : int binary_tree = Node (3, Node (2, Node (1, Empty, Empty), Empty),Node (5, Empty, Node (7, Empty, Empty)))
+ 
+B. Then use this function to test the solution of the previous problem.
+ 
+    # is_symmetric(construct [5;3;18;1;4;12;21]);;
+    - : bool = true
+    # not(is_symmetric(construct [3;2;5;7;4]));;
+    - : bool = true
+	
+##### 58. Generate-and-test paradigm. (medium)
+
+Apply the generate-and-test paradigm to construct all symmetric, completely balanced binary trees with a given number of nodes.
+
+    # sym_cbal_trees 5;;
+    - : char binary_tree list = 
+		[
+			Node ('x', Node ('x', Node ('x', Empty, Empty), Empty),Node ('x', Empty, Node ('x', Empty, Empty)));
+			Node ('x', Node ('x', Empty, Node ('x', Empty, Empty)),Node ('x', Node ('x', Empty, Empty), Empty))
+		]
+
+How many such trees are there with 57 nodes? Investigate about how many solutions there are for a given number of nodes? What if the number is even? Write an appropriate function.
+
+    # List.length (sym_cbal_trees 57);;
+    - : int = 256
+    # List.map (fun n -> n, List.length(sym_cbal_trees n)) (range 10 20);;
+    - : (int * int) list = [(10, 0); (11, 4); (12, 0); (13, 4); (14, 0); (15, 1); (16, 0); (17, 8);(18, 0); (19, 16); (20, 0)]
+
 ##### 59. Construct height-balanced binary trees. (medium)
 
 In a height-balanced binary tree, the following property holds for every node: The height of its left subtree and the height of its right subtree are almost equal, which means their difference is not greater than one.
