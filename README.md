@@ -244,8 +244,62 @@ Use Euclid's algorithm.
     - : int = 1
     # gcd 20536 7826;;
     - : int = 2
-	
 
+##### 33. Determine whether two positive integer numbers are coprime. (easy)
+
+Two numbers are coprime if their greatest common divisor equals 1.
+
+    # coprime 13 27;;
+    - : bool = true
+    # not (coprime 20536 7826);;
+    - : bool = true
+
+##### 34. Calculate Euler's totient function φ(m). (medium)
+
+Euler's so-called totient function φ(m) is defined as the number of positive integers r (1 ≤ r < m) that are coprime to m. We let φ(1) = 1.
+
+Find out what the value of φ(m) is if m is a prime number. Euler's totient function plays an important role in one of the most widely used public key cryptography methods (RSA). In this exercise you should use the most primitive method to calculate this function (there are smarter ways that we shall discuss later).
+
+    # phi 10;;
+    - : int = 4
+    # phi 13;;
+    - : int = 12
+
+
+##### 35. Determine the prime factors of a given positive integer. (medium)
+
+Construct a flat list containing the prime factors in ascending order.
+
+    # factors 315;;
+    - : int list = [3; 3; 5; 7]
+	
+#### 36. Determine the prime factors of a given positive integer (2). (medium)
+
+Construct a list containing the prime factors and their multiplicity. Hint: The problem is similar to problem Run-length encoding of a list (direct solution).
+
+    # factors 315;;
+    - : (int * int) list = [(3, 2); (5, 1); (7, 1)]
+
+##### 37. Calculate Euler's totient function φ(m) (improved). (medium)
+
+See problem "Calculate Euler's totient function φ(m)" for the definition of Euler's totient function. If the list of the prime factors of a number m is known in the form of the previous problem then the function phi(m) can be efficiently calculated as follows: Let [(p1, m1); (p2, m2); (p3, m3); ...] be the list of prime factors (and their multiplicities) of a given number m. Then φ(m) can be calculated with the following formula:
+
+φ(m) = (p1 - 1) × p1m1 - 1 × (p2 - 1) × p2m2 - 1 × (p3 - 1) × p3m3 - 1 × ⋯
+
+    # phi_improved 10;;
+    - : int = 4
+    # phi_improved 13;;
+    - : int = 12
+	
+##### 38. Compare the two methods of calculating Euler's totient function. (easy)
+
+Use the solutions of problems "Calculate Euler's totient function φ(m)" and "Calculate Euler's totient function φ(m) (improved)" to compare the algorithms. Take the number of logical inferences as a measure for efficiency. Try to calculate φ(10090) as an example.	
+
+    # timeit phi 10090;;
+    - : float = 0.00580191612243652344
+    # timeit phi_improved 10090;;
+    - : float = 7.08103179931640625e-05
+	
 ##### 39. A list of prime numbers. (easy)
 
 Given a range of integers by its lower and upper limit, construct a list of all prime numbers in that range.
