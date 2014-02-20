@@ -385,6 +385,65 @@ Let us call a binary tree symmetric if you can draw a vertical line through the 
 
 Hint: Write a function `is_mirror` first to check whether one tree is the mirror image of another. We are only interested in the structure, not in the contents of the nodes.
 
+##### 59. Construct height-balanced binary trees. (medium)
 
+In a height-balanced binary tree, the following property holds for every node: The height of its left subtree and the height of its right subtree are almost equal, which means their difference is not greater than one.
 
+Write a function hbal_tree to construct height-balanced binary trees for a given height. The function should generate all solutions via backtracking. Put the letter 'x' as information into all nodes of the tree.
 
+    # let t = hbal_tree 3;;
+    val t : char binary_tree list =
+      [Node ('x', Node ('x', Empty, Node ('x', Empty, Empty)),
+        Node ('x', Empty, Node ('x', Empty, Empty)));
+       Node ('x', Node ('x', Empty, Node ('x', Empty, Empty)),
+        Node ('x', Node ('x', Empty, Empty), Empty));
+       Node ('x', Node ('x', Empty, Node ('x', Empty, Empty)),
+        Node ('x', Node ('x', Empty, Empty), Node ('x', Empty, Empty)));
+       Node ('x', Node ('x', Node ('x', Empty, Empty), Empty),
+        Node ('x', Empty, Node ('x', Empty, Empty)));
+       Node ('x', Node ('x', Node ('x', Empty, Empty), Empty),
+        Node ('x', Node ('x', Empty, Empty), Empty));
+       Node ('x', Node ('x', Node ('x', Empty, Empty), Empty),
+        Node ('x', Node ('x', Empty, Empty), Node ('x', Empty, Empty)));
+       Node ('x', Node ('x', Node ('x', Empty, Empty), Node ('x', Empty, Empty)),
+        Node ('x', Empty, Node ('x', Empty, Empty)));
+       Node ('x', Node ('x', Node ('x', Empty, Empty), Node ('x', Empty, Empty)),
+        Node ('x', Node ('x', Empty, Empty), Empty));
+       Node ('x', Node ('x', Node ('x', Empty, Empty), Node ('x', Empty, Empty)),
+        Node ('x', Node ('x', Empty, Empty), Node ('x', Empty, Empty)));
+       Node ('x', Node ('x', Empty, Node ('x', Empty, Empty)),
+        Node ('x', Empty, Empty));
+       Node ('x', Node ('x', Node ('x', Empty, Empty), Empty),
+        Node ('x', Empty, Empty));
+       Node ('x', Node ('x', Node ('x', Empty, Empty), Node ('x', Empty, Empty)),
+        Node ('x', Empty, Empty));
+       Node ('x', Node ('x', Empty, Empty),
+        Node ('x', Empty, Node ('x', Empty, Empty)));
+       Node ('x', Node ('x', Empty, Empty),
+        Node ('x', Node ('x', Empty, Empty), Empty));
+       Node ('x', Node ('x', Empty, Empty),
+        Node ('x', Node ('x', Empty, Empty), Node ('x', Empty, Empty)))]
+    # let x = 'x';;
+    val x : char = 'x'
+    # List.mem (Node(x, Node(x, Node(x, Empty, Empty), Node(x, Empty, Empty)),
+                 Node(x, Node(x, Empty, Empty), Node(x, Empty, Empty)))) t;;
+    - : bool = true
+    # List.mem (Node(x, Node(x, Node(x, Empty, Empty), Node(x, Empty, Empty)),
+                 Node(x, Node(x, Empty, Empty), Empty))) t;;
+    - : bool = true
+    # List.length t;;
+    - : int = 15
+
+## 99+ problems in OCaml
+
+Here are the problems that I think harder or much harder than 99 problems in OCaml, but definitely worth thinking.
+
+### Binary Trees
+
+##### p55+ Construct completely balanced binary trees based on constraint of height. (medium)
+
+This problem is an extension of problem 55 and different from problem 59. **Note the difference of constraints and given number**
+
+In a height-balanced binary tree, the following property holds for every node: The **height** of its left subtree and the height of its right subtree are almost equal, which means their difference is not greater than one.
+
+Write a function `bal_trees_height` to construct height-balanced binary trees for **a given number of nodes**. The function should generate all solutions via backtracking. Put the letter 'x' as information into all nodes of the tree.
