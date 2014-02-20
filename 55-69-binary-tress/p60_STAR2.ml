@@ -37,15 +37,14 @@ let grow_one k l r =
   List.fold_left (fun acc x -> List.rev_append (fix_l x) acc) [] l
 
 let hbal_tree_nodes n =
-  let hbal_trees min_h max_h =
-    let rec build acc acc0 acc1 h =
-      if h = max_h+1 then acc
-      else 
-	let acc_h = rev_concat3 (grow_one (n-1) acc0 acc1) (grow_one (n-1) acc1 acc0) (grow_one (n-1) acc1 acc1) in
-	if h >= min_h then build (List.rev_append (List.filter (fun (x,s) -> if s = n then true else false) acc_h) acc) acc1 acc_h (h+1)
-	else build acc acc1 acc_h (h+1)
-    in 
-    build [] [] [(Empty,0)] 1
+  let k = n-1 in
+  let minh = min_h k and maxh = max_h k in
+  let rec hbal_trees acc acc0 acc1 h =
+    if h = maxh+1 then acc
+    else 
+      let acc_h = rev_concat3 (grow_one (n-1) acc0 acc1) (grow_one (n-1) acc1 acc0) (grow_one (n-1) acc1 acc1) in
+      let good_h = List.filter (fun (x,s) -> if s = n then true else false) acc_h |> List.map fst in
+      if h >= minh then hbal_trees (List.rev_append good_h acc) acc1 acc_h (h+1)
+      else hbal_trees acc acc1 acc_h (h+1)
   in 
-  hbal_trees (min_h (n-1)) (max_h (n-1)) |> List.map fst
-
+  hbal_trees [] [] [(Empty,0)] 1
