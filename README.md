@@ -421,6 +421,9 @@ An example of tree carrying char data is:
 		Node ('c', Empty, Node ('f', Node ('g', Empty, Empty), Empty)))
 		
 In OCaml, the strict type discipline guarantees that, if you get a value of type `binary_tree`, then it must have been created with the two constructors `Empty` and `Node`.
+
+*Be careful* that in OCaml, the definition of Leaf is different from typical imperative programming like Java. `Empty` is like `Null` and definition of `Leaf` here is the `Node` whose both left and right children are `Empty`.*
+
    
 ##### 55.Construct completely balanced binary trees. (medium)
 
@@ -532,6 +535,67 @@ C. Now, we can attack the main problem: construct all the height-balanced binary
 
     # List.length(hbal_tree_nodes 15);;
     - : int = 1553
+
+##### 61. Count the leaves of a binary tree. (easy)
+
+A leaf is a node with no successors. Write a function count_leaves to count them.
+
+     # count_leaves Empty;;
+     - : int = 0
+     # count_leaves example_tree;;
+     - : int = 3
+	 
+##### 62. Collect the leaves of a binary tree in a list. (easy)
+
+A leaf is a node with no successors. Write a function leaves to collect them in a list.
+
+    # leaves Empty;;
+    - : 'a list = []
+    # leaves example_tree;;
+    - : char list = ['d'; 'e'; 'g']
+
+##### 63. Collect the internal nodes of a binary tree in a list. (easy)
+
+An internal node of a binary tree has either one or two non-empty successors. Write a function internals to collect them in a list.
+
+    # internals (Node('a', Empty, Empty));;
+    - : char list = []
+    # internals example_tree;;
+    - : char list = ['b'; 'a'; 'c'; 'f']
+	
+##### 64. Collect the nodes at a given level in a list. (easy)
+
+A node of a binary tree is at level N if the path from the root to the node has length N-1. The root node is at level 1. Write a function at_level t l to collect all nodes of the tree t at level l in a list.
+
+    # at_level example_tree 2;;
+    - : char list = ['b'; 'c']
+    # at_level example_tree 5;;
+    - : char list = []
+
+##### 65. Construct a complete binary tree. (medium)
+
+A complete binary tree with height H is defined as follows: The levels 1,2,3,...,H-1 contain the maximum number of nodes (i.e 2i-1 at the level i, note that we start counting the levels from 1 at the root). In level H, which may contain less than the maximum possible number of nodes, all the nodes are "left-adjusted". This means that in a levelorder tree traversal all internal nodes come first, the leaves come second, and empty successors (the nil's which are not really nodes!) come last.
+
+Particularly, complete binary trees are used as data structures (or addressing schemes) for heaps.
+
+We can assign an address number to each node in a complete binary tree by enumerating the nodes in levelorder, starting at the root with number 1. In doing so, we realize that for every node X with address A the following property holds: The address of X's left and right successors are `2*A` and `2*A+1`, respectively, supposed the successors do exist. This fact can be used to elegantly construct a complete binary tree structure. Write a function `is_complete_binary_tree` with the following specification: `is_complete_binary_tree n t` returns true iff t is a complete binary tree with n nodes.
+
+##### 66. Layout a binary tree (1). (medium)
+
+As a preparation for drawing the tree, a layout algorithm is required to determine the position of each node in a rectangular grid. Several layout methods are conceivable, one of them is shown in the illustration.
+
+![Binary Tree Grid](http://ocaml.org/img/tree-layout1.gif)
+
+In this layout strategy, the position of a node v is obtained by the following two rules:
+
+- x(v) is equal to the position of the node v in the inorder sequence;
+- y(v) is equal to the depth of the node v in the tree.
+
+In order to store the position of the nodes, we redefine the OCaml type representing a node (and its successors) as follows:
+
+
+
+***
 
 ## 99+ problems in OCaml
 
