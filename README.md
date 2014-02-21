@@ -593,6 +593,30 @@ In this layout strategy, the position of a node v is obtained by the following t
 
 In order to store the position of the nodes, we redefine the OCaml type representing a node (and its successors) as follows:
 
+    type 'a pos_binary_tree =
+      | E (* represents the empty tree *)
+      | N of 'a * int * int * 'a pos_binary_tree * 'a pos_binary_tree
+	  
+`N(w,x,y,l,r)` represents a (non-empty) binary tree with root `w` "positioned" at `(x,y)`, and subtrees `l` and `r`. 
+
+Write a function `layout_binary_tree` with the following specification: `layout_binary_tree t` returns the "positioned" binary tree obtained from the binary tree `t`.
+
+##### 67. Layout a binary tree (2). (medium)
+
+![Binary Tree Grid](http://ocaml.org/img/tree-layout2.gif)
+
+An alternative layout method is depicted in this illustration. Find out the rules and write the corresponding OCaml function.
+
+Hint: On a given level, the horizontal distance between neighbouring nodes is constant.
+
+
+##### 68. Layout a binary tree (3). (hard)
+
+![Binary Tree Grid](http://ocaml.org/img/tree-layout3.gif)
+
+Yet another layout strategy is shown in the above illustration. The method yields a very compact layout while maintaining a certain symmetry in every node. Find out the rules and write the corresponding predicate.
+
+Hint: Consider the horizontal distance between a node and its successor nodes. How tight can you pack together two subtrees to construct the combined binary tree? This is a difficult problem. Don't give up too early!
 
 
 ***
