@@ -1,14 +1,27 @@
 (*
 
-Construct a complete binary tree. (medium)
+Layout a binary tree (2). (medium)
 
-A complete binary tree with height H is defined as follows: The levels 1,2,3,...,H-1 contain the maximum number of nodes (i.e 2i-1 at the level i, note that we start counting the levels from 1 at the root). In level H, which may contain less than the maximum possible number of nodes, all the nodes are "left-adjusted". This means that in a levelorder tree traversal all internal nodes come first, the leaves come second, and empty successors (the nil's which are not really nodes!) come last.
+http://ocaml.org/img/tree-layout2.gif
 
-Particularly, complete binary trees are used as data structures (or addressing schemes) for heaps.
+An alternative layout method is depicted in this illustration. Find out the rules and write the corresponding OCaml function.
 
-We can assign an address number to each node in a complete binary tree by enumerating the nodes in levelorder, starting at the root with number 1. In doing so, we realize that for every node X with address A the following property holds: The address of X's left and right successors are `2*A` and `2*A+1`, respectively, supposed the successors do exist. This fact can be used to elegantly construct a complete binary tree structure. Write a function `is_complete_binary_tree` with the following specification: `is_complete_binary_tree n t` returns true iff t is a complete binary tree with n nodes.
+Hint: On a given level, the horizontal distance between neighbouring nodes is constant.
 
 *)
 
-type 'a bt = Empty | Node of 'a * 'a bt * 'a bt
+type 'a btree = Empty | Node of 'a * 'a btree * 'a btree
 
+type 'a pos_binary_tree =
+  | E (* represents the empty tree *)
+  | N of 'a * int * int * 'a pos_binary_tree * 'a pos_binary_tree
+
+let layout_btree2 t = 
+  
+
+
+let bt = Node ('n', Node ('k', Node ('c', Node ('a',Empty, Empty), Node ('h', Node ('g', Node ('e',Empty,Empty),Empty),Empty)), Node ('m',Empty,Empty)), Node ('u', Node ('p', Empty, Node ('s',Node ('q',Empty,Empty),Empty)),Empty))
+
+let rec xys = function
+  | E -> []
+  | N (k,x,y,l,r) -> (k,x,y)::(List.rev_append (xys l) (xys r))

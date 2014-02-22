@@ -1,36 +1,48 @@
 (*
 
-Collect the nodes at a given level in a list. (easy)
+Layout a binary tree (1). (medium)
 
-A node of a binary tree is at level N if the path from the root to the node has length N-1. The root node is at level 1. Write a function at_level t l to collect all nodes of the tree t at level l in a list.
+As a preparation for drawing the tree, a layout algorithm is required to determine the position of each node in a rectangular grid. Several layout methods are conceivable, one of them is shown in the illustration.
+
+![Binary Tree Grid](http://ocaml.org/img/tree-layout1.gif)
+
+In this layout strategy, the position of a node v is obtained by the following two rules:
+
+- x(v) is equal to the position of the node v in the inorder sequence;
+- y(v) is equal to the depth of the node v in the tree.
+
+In order to store the position of the nodes, we redefine the OCaml type representing a node (and its successors) as follows:
+
+    type 'a pos_binary_tree =
+      | E (* represents the empty tree *)
+      | N of 'a * int * int * 'a pos_binary_tree * 'a pos_binary_tree
+	  
+`N(w,x,y,l,r)` represents a (non-empty) binary tree with root `w` "positioned" at `(x,y)`, and subtrees `l` and `r`. 
+
+Write a function `layout_binary_tree` with the following specification: `layout_binary_tree t` returns the "positioned" binary tree obtained from the binary tree `t`.
 
 *)
 
-type 'a bt = Empty | Node of 'a * 'a bt * 'a bt
+type 'a btree = Empty | Node of 'a * 'a btree * 'a btree
 
-let at_level btree lvl = 
-  let rec collect level = function
-    | Node (x,l,r) when level = lvl -> [x]
-    | Node (_,l,r) when level < lvl -> List.rev_append (collect (level+1) l) (collect (level+1) r)
-    | _ -> []
+type 'a pos_binary_tree =
+  | E (* represents the empty tree *)
+  | N of 'a * int * int * 'a pos_binary_tree * 'a pos_binary_tree
+
+let layout_btree t =
+  let rec pos_btree s y = function
+    | Empty -> (E,0)
+    | Node (x,l,r) ->
+      let (new_pl,sl) = pos_btree s (y+1) l in
+      let (new_pr,sr) = pos_btree (sl+1+s) (y+1) r in
+      (N (x,sl+1+s, y, new_pl, new_pr), sl+1+sr)
   in 
-  collect 1 btree
+  pos_btree 0 1 t
+    
+let bt = Node ('n', Node ('k', Node ('c', Node ('a',Empty, Empty), Node ('h', Node ('g', Node ('e',Empty,Empty),Empty),Empty)), Node ('m',Empty,Empty)), Node ('u', Node ('p', Empty, Node ('s',Node ('q',Empty,Empty),Empty)),Empty))
 
-let at_level' btree lvl =
-  let rec collect acc level = function
-    | Empty, [] -> acc
-    | _, [] when level > lvl -> acc
-    | Node (x,l,r), [] when level = lvl -> x::acc
-    | Empty, (hd,new_lvl)::tl -> collect acc new_lvl (hd,tl)
-    | _, (hd,new_lvl)::tl when level > lvl -> collect acc new_lvl (hd,tl)
-    | Node (x,l,r), (hd,new_lvl)::tl when level = lvl -> collect (x::acc) new_lvl (hd,tl)
-    | Node (x,l,r), wl -> collect acc (level+1) (l, (r,level+1)::wl)
-  in 
-  collect [] 1 (btree,[])
-
-let example_tree =
-    Node('a', Node('b', Node('d', Empty, Empty), Node('e', Empty, Empty)),
-         Node('c', Empty, Node('f', Node('g', Empty, Empty), Empty)))
-
+let rec xys = function
+  | E -> []
+  | N (k,x,y,l,r) -> (k,x,y)::(List.rev_append (xys l) (xys r))
 
 

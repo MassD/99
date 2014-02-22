@@ -340,14 +340,14 @@ A logical expression in two variables can then be written in prefix notation. Fo
     # And(Or(Var "a", Var "b"), And(Var "a", Var "b"));;
     - : bool_expr = And (Or (Var "a", Var "b"), And (Var "a", Var "b"))
 
-##### 46. Truth tables for logical expressions (2 variables). (medium)
+##### 47. Truth tables for logical expressions (2 variables). (medium)
 
 Define a function, table2 which returns the truth table of a given logical expression in two variables (specified as arguments). The return value must be a list of triples containing (value\_of\_a, value\_of\_b, value\_of\_expr).
 
     # table2 "a" "b" (And(Var "a", Or(Var "a", Var "b")));;
     - : (bool * bool * bool) list = [(true, true, true); (true, false, true); (false, true, false);(false, false, false)]
 	
-##### 47. Truth tables for logical expressions. (medium)
+##### 48. Truth tables for logical expressions. (medium)
 
 Generalize the previous problem in such a way that the logical expression may contain any number of logical variables. Define table in a way that table variables expr returns the truth table for the expression expr, which contains the logical variables enumerated in variables.
 
@@ -369,7 +369,7 @@ Generalize the previous problem in such a way that the logical expression may co
 		 ([("a", false); ("b", false); ("c", true)], false);
 		 ([("a", false); ("b", false); ("c", false)], false)]
 
-##### 48. Gray code. (medium)
+##### 49. Gray code. (medium)
 
 An n-bit Gray code is a sequence of n-bit strings constructed according to certain rules. For example,
 
@@ -386,7 +386,7 @@ Find out the construction rules and write a function with the following specific
     # gray 3;;
     - : string list = ["000"; "001"; "010"; "011"; "100"; "101"; "110"; "111"]
 
-##### 49. Huffman code. (hard)
+##### 50. Huffman code. (hard)
 
 First of all, consult a good book on discrete mathematics or algorithms for a detailed description of Huffman codes (you can start with the [Wikipedia page](http://en.wikipedia.org/wiki/Huffman_coding))!
 
@@ -545,7 +545,7 @@ A leaf is a node with no successors. Write a function count_leaves to count them
      # count_leaves example_tree;;
      - : int = 3
 	 
-##### 62. Collect the leaves of a binary tree in a list. (easy)
+##### 61A. Collect the leaves of a binary tree in a list. (easy)
 
 A leaf is a node with no successors. Write a function leaves to collect them in a list.
 
@@ -554,7 +554,7 @@ A leaf is a node with no successors. Write a function leaves to collect them in 
     # leaves example_tree;;
     - : char list = ['d'; 'e'; 'g']
 
-##### 63. Collect the internal nodes of a binary tree in a list. (easy)
+##### 62. Collect the internal nodes of a binary tree in a list. (easy)
 
 An internal node of a binary tree has either one or two non-empty successors. Write a function internals to collect them in a list.
 
@@ -563,7 +563,7 @@ An internal node of a binary tree has either one or two non-empty successors. Wr
     # internals example_tree;;
     - : char list = ['b'; 'a'; 'c'; 'f']
 	
-##### 64. Collect the nodes at a given level in a list. (easy)
+##### 62A. Collect the nodes at a given level in a list. (easy)
 
 A node of a binary tree is at level N if the path from the root to the node has length N-1. The root node is at level 1. Write a function at_level t l to collect all nodes of the tree t at level l in a list.
 
@@ -572,7 +572,7 @@ A node of a binary tree is at level N if the path from the root to the node has 
     # at_level example_tree 5;;
     - : char list = []
 
-##### 65. Construct a complete binary tree. (medium)
+##### 63. Construct a complete binary tree. (medium)
 
 A complete binary tree with height H is defined as follows: The levels 1,2,3,...,H-1 contain the maximum number of nodes (i.e 2i-1 at the level i, note that we start counting the levels from 1 at the root). In level H, which may contain less than the maximum possible number of nodes, all the nodes are "left-adjusted". This means that in a levelorder tree traversal all internal nodes come first, the leaves come second, and empty successors (the nil's which are not really nodes!) come last.
 
@@ -580,7 +580,7 @@ Particularly, complete binary trees are used as data structures (or addressing s
 
 We can assign an address number to each node in a complete binary tree by enumerating the nodes in levelorder, starting at the root with number 1. In doing so, we realize that for every node X with address A the following property holds: The address of X's left and right successors are `2*A` and `2*A+1`, respectively, supposed the successors do exist. This fact can be used to elegantly construct a complete binary tree structure. Write a function `is_complete_binary_tree` with the following specification: `is_complete_binary_tree n t` returns true iff t is a complete binary tree with n nodes.
 
-##### 66. Layout a binary tree (1). (medium)
+##### 64. Layout a binary tree (1). (medium)
 
 As a preparation for drawing the tree, a layout algorithm is required to determine the position of each node in a rectangular grid. Several layout methods are conceivable, one of them is shown in the illustration.
 
@@ -601,7 +601,7 @@ In order to store the position of the nodes, we redefine the OCaml type represen
 
 Write a function `layout_binary_tree` with the following specification: `layout_binary_tree t` returns the "positioned" binary tree obtained from the binary tree `t`.
 
-##### 67. Layout a binary tree (2). (medium)
+##### 65. Layout a binary tree (2). (medium)
 
 ![Binary Tree Grid](http://ocaml.org/img/tree-layout2.gif)
 
@@ -610,7 +610,7 @@ An alternative layout method is depicted in this illustration. Find out the rule
 Hint: On a given level, the horizontal distance between neighbouring nodes is constant.
 
 
-##### 68. Layout a binary tree (3). (hard)
+##### 66. Layout a binary tree (3). (hard)
 
 ![Binary Tree Grid](http://ocaml.org/img/tree-layout3.gif)
 
