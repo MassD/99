@@ -24,15 +24,10 @@ let rec height = function
 
 let get_x h level = (2. ** (float_of_int (h-level)) |> int_of_float) - 1
 
-let layout_btree2 t = 
-  let h = height t in
-  let rec build level xs = function
-    | Empty -> E
-    | Node (k,l,r) -> 
-      let x = xs + get_x h level in
-      N (k,x,level,build (level+1) xs l,build (level+1) (x+1) r)
-  in 
-  build 1 0 t
+let layout_btree3 t = 
+  let rec tag x y= function
+    | Empty -> (E,x,y)
+    | Node (k,l,r) -> N (k
   
 let bt = 
   Node ('n', 

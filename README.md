@@ -623,11 +623,80 @@ Hint: Consider the horizontal distance between a node and its successor nodes. H
 
 ## 99+ problems in OCaml
 
-Here are the problems that I think harder or much harder than 99 problems in OCaml, but definitely worth thinking.
+Here are the problems that I think median, harder or much harder than 99 problems in OCaml, but definitely worth thinking.
 
 ### List
 
 ### Max
 
 ### Binary Trees
- 
+
+##### Find distance between two given keys of a Binary Tree(medium)
+
+Find the distance between two keys in a binary tree, no parent pointers are given. Distance between two nodes is the minimum number of edges to be traversed to reach one node from other.
+
+ref: http://www.geeksforgeeks.org/find-distance-two-given-nodes/
+
+##### Print all nodes that don’t have sibling (medium)
+
+Given a Binary Tree, print all nodes that don’t have a sibling (a sibling is a node that has same parent. In a Binary Tree, there can be at most one sibling). Root should not be printed as root cannot have a sibling.
+
+![No sibling](http://d2o58evtke57tz.cloudfront.net/wp-content/uploads/Binary-Tree.png)
+
+ref: http://www.geeksforgeeks.org/print-nodes-dont-sibling-binary-tree/
+
+##### Lowest Common Ancestor in a Binary Tree (medium)
+
+Given a binary tree (not a binary search tree) and two values say n1 and n2, write a program to find the least common ancestor.
+
+![LCA](http://d2o58evtke57tz.cloudfront.net/wp-content/uploads/lca.png)
+
+ref: http://www.geeksforgeeks.org/lowest-common-ancestor-binary-tree-set-1/
+
+##### Remove all nodes which don’t lie in any path with sum>= k (medium+)
+
+Given a binary tree, a complete path is defined as a path from root to a leaf. The sum of all nodes on that path is defined as the sum of that path. Given a number K, you have to remove (prune the tree) all nodes which don’t lie in any path with sum>=k.
+
+Note: A node can be part of multiple paths. So we have to delete it only in case when all paths from it have sum less than K.
+
+Consider the following Binary Tree
+          1 
+      /      \
+     2        3
+   /   \     /  \
+  4     5   6    7
+ / \    /       /
+8   9  12      10
+   / \           \
+  13  14         11
+      / 
+     15 
+
+For input k = 20, the tree should be changed to following
+(Nodes with values 6 and 8 are deleted)
+          1 
+      /      \
+     2        3
+   /   \        \
+  4     5        7
+   \    /       /
+    9  12      10
+   / \           \
+  13  14         11
+      / 
+     15 
+
+For input k = 45, the tree should be changed to following.
+      1 
+    / 
+   2   
+  / 
+ 4  
+  \   
+   9    
+    \   
+     14 
+     /
+    15  
+	
+ref: http://www.geeksforgeeks.org/remove-all-nodes-which-lie-on-a-path-having-sum-less-than-k/
