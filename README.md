@@ -618,6 +618,18 @@ Yet another layout strategy is shown in the above illustration. The method yield
 
 Hint: Consider the horizontal distance between a node and its successor nodes. How tight can you pack together two subtrees to construct the combined binary tree? This is a difficult problem. Don't give up too early!
 
+##### 67. A string representation of binary trees. (medium)
+
+![Binary Tree](http://ocaml.org/img/binary-tree.gif)
+
+Somebody represents binary trees as strings of the following type (see example): `"a(b(d,e),c(,f(g,)))"`.
+
+- Write an OCaml function which generates this string representation, if the tree is given as usual (as `Empty` or `Node(x,l,r)` term). 
+- Then write a function which does this inverse; i.e. given the string representation, construct the tree in the usual form. 
+- Finally, combine the two predicates in a single function `tree_string` which can be used in both directions.
+
+For simplicity, suppose the information in the nodes is a single letter and there are no spaces in the string.
+
 
 ***
 

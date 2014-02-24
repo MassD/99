@@ -10,24 +10,48 @@ Hint: Consider the horizontal distance between a node and its successor nodes. H
 
 *)
 
-
-
 type 'a btree = Empty | Node of 'a * 'a btree * 'a btree
 
 type 'a pos_binary_tree =
   | E (* represents the empty tree *)
   | N of 'a * int * int * 'a pos_binary_tree * 'a pos_binary_tree
 
-let rec height = function
+let rec tag x = function
+    | Empty -> Empty
+    | Node (k,l,r) -> Node ((k,x), tag (x-1) l, tag (x+1) r)
+
+let rec check_clash l r =
+  match l, r with
+    | _, Empty | Empty, _ -> 0
+    | Node ((k1,x1),_,r1), Node ((k2,x2),l2,_) ->
+      let shift = check_clash r1 l2 in
+      if x1-shift < x2+shift then shift
+      else if x1-shift = x2+shift then shift+1
+      else (x1-shift)-(x2+shift)
+
+let rec shift_move shift = function
+  | Empty -> Empty
+  | Node ((k,x),l,r) -> Node ((k,x+shift),shift_move shift l, shift_move shift r)
+
+let rec wider = function
+    | Empty -> Empty
+    | Node ((k,x),l,r) -> 
+      let wide_l, wide_r = wider l, wider r in
+      let shift = check_clash wide_l wide_r in
+      Node ((k,x),shift_move (-shift) l, shift_move shift r)
+
+let rec min_x = function
   | Empty -> 0
-  | Node (_,l,r) -> 1 + max (height l) (height r)
+  | Node ((_,x),Empty,_) -> x
+  | Node (_,l,_) -> min_x l
 
-let get_x h level = (2. ** (float_of_int (h-level)) |> int_of_float) - 1
-
-let layout_btree3 t = 
-  let rec tag x y= function
-    | Empty -> (E,x,y)
-    | Node (k,l,r) -> N (k
+let layout3 btree =
+  let rec build shift y = function
+    | Empty -> E
+    | Node ((k,x),l,r) -> N (k, x+shift, y, build shift (y+1) l, build shift (y+1) r)
+  in 
+  let wider_btree = tag 0 btree |> wider in
+  build (1-(min_x wider_btree)) 1 wider_btree
   
 let bt = 
   Node ('n', 
