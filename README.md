@@ -667,13 +667,7 @@ To represent multiway trees, we will use the following type which is a direct tr
 The example tree depicted opposite is therefore represented by the following OCaml expression:
 
     T('a', [T('f',[T('g',[])]); T('c',[]); T('b',[T('d',[]); T('e',[])])])
-
-##### 70B. Check whether a given term represents a multiway tree.
-
-    # is_multiway_tree T('a', [T('f',[T('g',[])]); T('c',[]); T('b',[T('d',[]); T('e',[])])]);;
-	- : true
-
-
+	
 ##### 70C. Count the nodes of a multiway tree. (easy)
 
     # count_nodes (T('a', [T('f',[]) ]));;
