@@ -644,7 +644,7 @@ We consider binary trees with nodes that are identified by single lower-case let
 
 3. If both the preorder sequence and the inorder sequence of the nodes of a binary tree are given, then the tree is determined unambiguously. Write a function `pre_in_tree` that does the job.
 
-4. Solve problems 1 to 3 using `difference lists`. Cool! Use the function `timeit` (defined in problem “Compare the two methods of calculating Euler's totient function.”) to compare the solutions.
+4. Solve problems 1 to 3 using [difference lists](https://en.wikipedia.org/wiki/Difference_list). Cool! Use the function `timeit` (defined in problem “Compare the two methods of calculating Euler's totient function.”) to compare the solutions.
 
 What happens if the same character appears in more than one node. Try for instance `pre_in_tree "aba" "baa"`.
 
@@ -688,44 +688,44 @@ Given a binary tree, a complete path is defined as a path from root to a leaf. T
 
 Note: A node can be part of multiple paths. So we have to delete it only in case when all paths from it have sum less than K.
 
-Consider the following Binary Tree
-          1 
-      /      \
-     2        3
-   /   \     /  \
-  4     5   6    7
- / \    /       /
-8   9  12      10
-   / \           \
-  13  14         11
-      / 
-     15 
+Consider the following Binary Tree  
+          1  
+      /      \  
+     2        3  
+   /   \     /  \  
+  4     5   6    7  
+ / \    /       /  
+8   9  12      10  
+   / \           \  
+  13  14         11  
+      /   
+     15   
 
 For input k = 20, the tree should be changed to following
-(Nodes with values 6 and 8 are deleted)
-          1 
-      /      \
-     2        3
-   /   \        \
-  4     5        7
-   \    /       /
-    9  12      10
-   / \           \
-  13  14         11
-      / 
-     15 
+(Nodes with values 6 and 8 are deleted)  
+          1   
+      /      \  
+     2        3  
+   /   \        \  
+  4     5        7  
+   \    /       /  
+    9  12      10  
+   / \           \  
+  13  14         11  
+      /   
+     15   
 
-For input k = 45, the tree should be changed to following.
-      1 
-    / 
-   2   
-  / 
- 4  
-  \   
-   9    
+For input k = 45, the tree should be changed to following.  
+      1   
+    /   
+   2     
+  /   
+ 4    
+  \    
+   9     
     \   
-     14 
+     14  
      /
-    15  
+    15   
 	
 ref: http://www.geeksforgeeks.org/remove-all-nodes-which-lie-on-a-path-having-sum-less-than-k/
