@@ -648,12 +648,85 @@ We consider binary trees with nodes that are identified by single lower-case let
 
 What happens if the same character appears in more than one node. Try for instance `pre_in_tree "aba" "baa"`.
 
-##### Dotstring representation of binary trees. (medium)
+##### 69. Dotstring representation of binary trees. (medium)
 
 We consider again binary trees with nodes that are identified by single lower-case letters, as in the example of problem “A string representation of binary trees”. 
 
 Such a tree can be represented by the preorder sequence of its nodes in which dots (.) are inserted where an empty subtree (nil) is encountered during the tree traversal. For example, the tree shown in problem “A string representation of binary trees” (`"a(b(d,e),c(,f(g,)))"`) is represented as `'abd..e..c.fg...'`. First, try to establish a syntax (`BNF` or `syntax diagrams`) and then write a function `tree_dotstring` which does the conversion in both directions. Use difference lists.
 
+### Multiway Trees
+
+A multiway tree is composed of a root element and a (possibly empty) set of successors which are multiway trees themselves. A multiway tree is never empty. The set of successor trees is sometimes called a forest.
+
+![Multiway Trees](http://ocaml.org/img/multiway-tree.gif)
+
+To represent multiway trees, we will use the following type which is a direct translation of the definition:
+
+    type 'a mult_tree = T of 'a * 'a mult_tree list
+	
+The example tree depicted opposite is therefore represented by the following OCaml expression:
+
+    T('a', [T('f',[T('g',[])]); T('c',[]); T('b',[T('d',[]); T('e',[])])])
+
+##### 70B. Check whether a given term represents a multiway tree.
+
+    # is_multiway_tree T('a', [T('f',[T('g',[])]); T('c',[]); T('b',[T('d',[]); T('e',[])])]);;
+	- : true
+
+
+##### 70C. Count the nodes of a multiway tree. (easy)
+
+    # count_nodes (T('a', [T('f',[]) ]));;
+    - : int = 2
+
+##### 70. Tree construction from a node string. (medium)
+
+![Multiway Tree](http://ocaml.org/img/multiway-tree.gif)
+
+We suppose that the nodes of a multiway tree contain single characters. In the depth-first order sequence of its nodes, a special character ^ has been inserted whenever, during the tree traversal, the move is a backtrack to the previous level.
+
+By this rule, the tree in the figure opposite is represented as: afg^^c^bd^e^^^.
+
+Write functions `string_of_tree : char mult_tree -> string` to construct the string representing the tree and `tree_of_string : string -> char mult_tree` to construct the tree when the string is given.
+
+    # let t = T('a', [T('f',[T('g',[])]); T('c',[]);T('b',[T('d',[]); T('e',[])])]);;
+    val t : char mult_tree = T ('a',[T ('f', [T ('g', [])]); T ('c', []); T ('b', [T ('d', []); T ('e', [])])])
+    # string_of_tree t;;
+    - : string = "afg^^c^bd^e^^^"
+    # tree_of_string "afg^^c^bd^e^^^";;
+    - : char mult_tree = T ('a',[T ('f', [T ('g', [])]); T ('c', []); T ('b', [T ('d', []); T ('e', [])])])
+
+##### 71. Determine the internal path length of a tree. (easy)
+
+We define the internal path length of a multiway tree as the total sum of the path lengths from the root to all nodes of the tree. By this definition, the tree `t` in the figure of the previous problem has an internal path length of 9. Write a function `ipl tree` that returns the internal path length of `tree`.
+
+    # ipl t;;
+    - : int = 9
+	
+##### 72. Construct the bottom-up order sequence of the tree nodes. (easy)
+
+Write a function `bottom_up t` which constructs the bottom-up sequence of the nodes of the multiway tree `t`.
+
+    # bottom_up (T('a', [T('b', [])]));;
+    - : char list = ['b'; 'a']
+    # bottom_up t;;
+    - : char list = ['g'; 'f'; 'c'; 'd'; 'e'; 'b'; 'a']
+
+
+##### 73. Lisp-like tree representation. (medium)
+
+There is a particular notation for multiway trees in Lisp. The picture shows how multiway tree structures are represented in Lisp.
+
+![Lisp representation of multiway](http://ocaml.org/img/lisp-like-tree.png)
+
+Note that in the "lispy" notation a node with successors (children) in the tree is always the first element in a list, followed by its children. The "lispy" representation of a multiway tree is a sequence of atoms and parentheses '(' and ')'. This is very close to the way trees are represented in OCaml, except that no constructor `T` is used. Write a function `lispy : char mult_tree -> string` that returns the lispy notation of the tree.
+
+    # lispy (T('a', []));;
+    - : string = "a"
+    # lispy (T('a', [T('b', [])]));;
+    - : string = "(a b)"
+    # lispy t;;
+    - : string = "(a (f g) c (b d e))"
 
 
 ***
