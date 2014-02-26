@@ -735,13 +735,13 @@ Here are the problems that I think median, harder or much harder than 99 problem
 
 ### Binary Trees
 
-##### Find distance between two given keys of a Binary Tree(medium)
+##### 1. Find distance between two given keys of a Binary Tree(medium)
 
 Find the distance between two keys in a binary tree, no parent pointers are given. Distance between two nodes is the minimum number of edges to be traversed to reach one node from other.
 
 ref: http://www.geeksforgeeks.org/find-distance-two-given-nodes/
 
-##### Print all nodes that don’t have sibling (medium)
+##### 2. Print all nodes that don’t have sibling (medium)
 
 Given a Binary Tree, print all nodes that don’t have a sibling (a sibling is a node that has same parent. In a Binary Tree, there can be at most one sibling). Root should not be printed as root cannot have a sibling.
 
@@ -749,7 +749,7 @@ Given a Binary Tree, print all nodes that don’t have a sibling (a sibling is a
 
 ref: http://www.geeksforgeeks.org/print-nodes-dont-sibling-binary-tree/
 
-##### Lowest Common Ancestor in a Binary Tree (medium)
+##### 3. Lowest Common Ancestor in a Binary Tree (medium)
 
 Given a binary tree (not a binary search tree) and two values say n1 and n2, write a program to find the least common ancestor.
 
@@ -757,7 +757,7 @@ Given a binary tree (not a binary search tree) and two values say n1 and n2, wri
 
 ref: http://www.geeksforgeeks.org/lowest-common-ancestor-binary-tree-set-1/
 
-##### Remove all nodes which don’t lie in any path with sum>= k (medium+)
+##### 4. Remove all nodes which don’t lie in any path with sum>= k (medium+)
 
 Given a binary tree, a complete path is defined as a path from root to a leaf. The sum of all nodes on that path is defined as the sum of that path. Given a number K, you have to remove (prune the tree) all nodes which don’t lie in any path with sum>=k.
 
@@ -804,3 +804,13 @@ For input k = 45, the tree should be changed to following.
     15   
 	
 ref: http://www.geeksforgeeks.org/remove-all-nodes-which-lie-on-a-path-having-sum-less-than-k/
+
+##### 5. Print all nodes that are at distance k from a leaf node
+
+Given a Binary Tree and a positive integer k, print all nodes that are distance k from a leaf node.
+
+Here the meaning of distance is different from previous post. Here k distance from a leaf means k levels higher than a leaf node. For example if k is more than height of Binary Tree, then nothing should be printed. Expected time complexity is O(n) where n is the number nodes in the given Binary Tree.
+
+
+ref: http://www.geeksforgeeks.org/print-nodes-distance-k-leaf-node/
+
