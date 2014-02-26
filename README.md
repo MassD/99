@@ -768,7 +768,7 @@ Write functions to convert between the different graph representations. With the
 
 ##### 81. Path from one node to another one. (medium)
 
-Write a function paths g a b that returns all acyclic path p from node a to node b ≠ a in the graph g. The function should return the list of all paths via backtracking.
+Write a function `paths g a b` that returns all acyclic path p from node a to node b ≠ a in the graph g. The function should return the list of all paths via backtracking.
 
     # paths example_graph 'f' 'b';;
     - : char list list = [['f'; 'c'; 'b']; ['f'; 'b']]
