@@ -722,6 +722,143 @@ Note that in the "lispy" notation a node with successors (children) in the tree 
     # lispy t;;
     - : string = "(a (f g) c (b d e))"
 
+### Graphs
+
+![A graph](http://ocaml.org/img/graph1.gif)
+
+A graph is defined as a set of nodes and a set of edges, where each edge is a pair of different nodes.
+
+There are several ways to represent graphs in OCaml.
+
+#### edge-clause form
+
+One method is to list all edges, an edge being a pair of nodes. In this form, the graph depicted opposite is represented as the following expression:
+
+    ['h', 'g';  'k', 'f';  'f', 'b';  'f', 'c';  'c', 'b']
+	
+We call this edge-clause form. Obviously, isolated nodes cannot be represented.
+
+#### graph-term form
+
+Another method is to represent the whole graph as one data object. According to the definition of the graph as a pair of two sets (nodes and edges), we may use the following OCaml type:
+
+    type 'a graph_term = { nodes : 'a list;  edges : ('a * 'a) list }
+	
+Then, the above example graph is represented by:
+
+    let example_graph =
+    { nodes = ['b'; 'c'; 'd'; 'f'; 'g'; 'h'; 'k'];
+      edges = ['h', 'g';  'k', 'f';  'f', 'b';  'f', 'c';  'c', 'b'] }
+	  
+We call this graph-term form. Note, that the lists are kept sorted, they are really sets, without duplicated elements. Each edge appears only once in the edge list; i.e. an edge from a node x to another node y is represented as `(x,y)`, the couple `(y,x)` is not present. The graph-term form is our default representation. You may want to define a similar type using sets instead of lists.
+
+#### adjacency-list form
+
+A third representation method is to associate with each node the set of nodes that are adjacent to that node. We call this the adjacency-list form. In our example:
+
+#### human-friendly form
+
+The representations we introduced so far well suited for automated processing, but their syntax is not very user-friendly. Typing the terms by hand is cumbersome and error-prone. We can define a more compact and "human-friendly" notation as follows: A graph (with char labelled nodes) is represented by a string of atoms and terms of the type X-Y. The atoms stand for isolated nodes, the X-Y terms describe edges. If an X appears as an endpoint of an edge, it is automatically defined as a node. Our example could be written as:
+
+    "b-c f-c g-h d f-b k-f h-g"
+	
+##### 80. Conversions. (easy)
+
+Write functions to convert between the different graph representations. With these functions, all representations are equivalent; i.e. for the following problems you can always pick freely the most convenient form. This problem is not particularly difficult, but it's a lot of work to deal with all the special cases.
+
+##### 81. Path from one node to another one. (medium)
+
+Write a function paths g a b that returns all acyclic path p from node a to node b ≠ a in the graph g. The function should return the list of all paths via backtracking.
+
+    # paths example_graph 'f' 'b';;
+    - : char list list = [['f'; 'c'; 'b']; ['f'; 'b']]
+
+##### 82. Cycle from a given node. (easy)
+
+Write a functions `cycle g a` that returns a closed path (cycle) `p` starting at a given node `a` in the graph `g`. The predicate should return the list of all cycles via backtracking.
+
+    # cycles example_graph 'f';;
+    - : char list list =
+    [['f'; 'b'; 'c'; 'f']; ['f'; 'c'; 'f']; ['f'; 'c'; 'b'; 'f'];
+     ['f'; 'b'; 'f']; ['f'; 'k'; 'f']]
+	 
+##### 83. Construct all spanning trees. (medium)
+
+![spanning tree](http://ocaml.org/img/spanning-tree-graph1.gif)
+
+Write a function `s_tree g` to construct (by backtracking) all spanning trees of a given graph `g`. With this predicate, find out how many spanning trees there are for the graph depicted to the left. The data of this example graph can be found in the test below. When you have a correct solution for the `s_tree` function, use it to define two other useful functions: `is_tree graph` and `is_connected Graph`. Both are five-minutes tasks!
+
+    # let g = { nodes = ['a'; 'b'; 'c'; 'd'; 'e'; 'f'; 'g'; 'h'];
+            edges = [('a', 'b'); ('a', 'd'); ('b', 'c'); ('b', 'e');
+                     ('c', 'e'); ('d', 'e'); ('d', 'f'); ('d', 'g');
+                     ('e', 'h'); ('f', 'g'); ('g', 'h')] };;
+    val g : char graph_term =
+      {nodes = ['a'; 'b'; 'c'; 'd'; 'e'; 'f'; 'g'; 'h'];
+       edges =
+        [('a', 'b'); ('a', 'd'); ('b', 'c'); ('b', 'e'); ('c', 'e'); ('d', 'e');
+         ('d', 'f'); ('d', 'g'); ('e', 'h'); ('f', 'g'); ('g', 'h')]}
+	 
+	 
+##### 84. Construct the minimal spanning tree. (medium)
+
+![](http://ocaml.org/img/spanning-tree-graph2.gif)
+
+Write a function `ms_tree graph` to construct the minimal spanning tree of a given labelled graph. A labelled graph will be represented as follows:
+
+    type ('a, 'b) labeled_graph = { nodes : 'a list;
+                                    edges : ('a * 'a * 'b) list }
+									
+(Beware that from now on `nodes` and `edges` mask the previous fields of the same name.)
+
+Hint: Use the algorithm of [Prim](http://en.wikipedia.org/wiki/Prim%27s_algorithm). A small modification of the solution of P83 does the trick. The data of the example graph to the right can be found below.
+
+    # let g = { nodes = ['a'; 'b'; 'c'; 'd'; 'e'; 'f'; 'g'; 'h'];
+                edges = [('a', 'b', 5); ('a', 'd', 3); ('b', 'c', 2);
+                         ('b', 'e', 4); ('c', 'e', 6); ('d', 'e', 7);
+                         ('d', 'f', 4); ('d', 'g', 3); ('e', 'h', 5);
+                         ('f', 'g', 4); ('g', 'h', 1)] };;
+    val g : (char, int) labeled_graph =
+      {nodes = ['a'; 'b'; 'c'; 'd'; 'e'; 'f'; 'g'; 'h'];
+       edges =
+        [('a', 'b', 5); ('a', 'd', 3); ('b', 'c', 2); ('b', 'e', 4);
+         ('c', 'e', 6); ('d', 'e', 7); ('d', 'f', 4); ('d', 'g', 3);
+         ('e', 'h', 5); ('f', 'g', 4); ('g', 'h', 1)]}
+
+##### 85. Graph isomorphism. (medium)
+
+Two graphs G1(N1,E1) and G2(N2,E2) are isomorphic if there is a bijection f: N1 → N2 such that for any nodes X,Y of N1, X and Y are adjacent if and only if f(X) and f(Y) are adjacent.
+
+Write a function that determines whether two graphs are isomorphic. Hint: Use an open-ended list to represent the function f.
+
+
+##### 86. Node degree and graph coloration. (medium)
+
+- Write a function `degree graph node` that determines the degree of a given node.
+
+- Write a function that generates a list of all nodes of a graph sorted according to decreasing degree.
+
+- Use [Welsh-Powell's algorithm](http://en.wikipedia.org/wiki/Graph_coloring#Greedy_coloring) to paint the nodes of a graph in such a way that adjacent nodes have different colors.
+
+##### 87. Depth-first order graph traversal. (medium)
+
+Write a function that generates a depth-first order graph traversal sequence. The starting point should be specified, and the output should be a list of nodes that are reachable from this starting point (in depth-first order).
+
+##### 88. Connected components. (medium)
+
+Write a predicate that splits a graph into its [connected components](http://en.wikipedia.org/wiki/Connected_component_%28graph_theory%29).
+
+##### 89. Bipartite graphs. (medium)
+
+Write a predicate that finds out whether a given graph is [bipartite](http://en.wikipedia.org/wiki/Bipartite_graph).
+
+##### 94. Generate K-regular simple graphs with N nodes. (hard)
+
+In a [K-regular graph](http://en.wikipedia.org/wiki/K-regular_graph) all nodes have a degree of K; i.e. the number of edges incident in each node is K. How many (non-isomorphic!) 3-regular graphs with 6 nodes are there?
+
+See also the [table of results](https://sites.google.com/site/prologsite/prolog-problems/6/solutions-6/p6_11.txt?attredirects=0&d=1).
+
+
+
 
 ***
 
@@ -730,7 +867,7 @@ Note that in the "lispy" notation a node with successors (children) in the tree 
 Here are the problems that I think median, harder or much harder than 99 problems in OCaml, but definitely worth thinking.
 
 ### List
-
+##### 
 ### Max
 
 ### Binary Trees
