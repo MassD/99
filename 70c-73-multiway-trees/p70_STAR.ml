@@ -14,26 +14,29 @@ Write functions `string_of_tree : char mult_tree -> string` to construct the str
 
 type 'a mult_tree = T of 'a * 'a mult_tree list
 
-let rec string_of_tree (T (k, mtl)) =
-  (Char.escaped k) ^ (str_of_mtl mtl)
-and str_of_mtl = function
-    | [] -> ""
-    | hd::tl -> string_of_tree hd ^ "^" ^ (str_of_mtl tl)
+let rec string_of_tree (T (k,mtl)) =
+  (Char.escaped k) ^ (List.fold_left (fun acc mt -> acc ^ (string_of_tree mt)) "" mtl) ^ "^"
 
-let tree_of_string s =
+let rec scan_for_kids s acc c p q i =
+  if i > q && c != 0 then failwith "parse error"
+  else if i > q then List.rev acc
+  else if s.[i] <> '^' then scan_for_kids s acc (c+1) p q (i+1)
+  else if s.[i] = '^' && c = 1 then (print_endline (String.sub s p (i-p));scan_for_kids s ((p,i-1)::acc) 0 (i+1) q (i+1))
+  else scan_for_kids s acc (c-1) p q (i+1)
+
+let tree_of_string s = 
   let len = String.length s in
-  if len = 0 then failwith "parse error"
-  else 
-    let rec tree_of_str s i =
-      if i >= len || s.[i] = '^' then failwith "parse error"
-      else T (s[i], mtl_of_str s (i+1))
-    and mtl_of_str s j =
-      if s[j] = '^' || j >= len then []
-      else [tree_of_str s j]
-    in 
-    tree_of_str s 0
+  let rec build s (p,q) = 
+    if p >= len then failwith "parse error"
+    else T (s.[p], scan_for_kids s [] 0 (p+1) q (p+1) |> List.map (build s))
+  in 
+  build s (0,len-2)
 
 
 
 
 let mt = T ('a', [T('f',[T('g',[])]); T('c',[]);T('b',[T('d',[]); T('e',[])])])
+
+let s = "afg^^c^bd^e^^^"
+
+

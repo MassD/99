@@ -679,7 +679,7 @@ The example tree depicted opposite is therefore represented by the following OCa
 
 We suppose that the nodes of a multiway tree contain single characters. In the depth-first order sequence of its nodes, a special character ^ has been inserted whenever, during the tree traversal, the move is a backtrack to the previous level.
 
-By this rule, the tree in the figure opposite is represented as: afg^^c^bd^e^^^.
+By this rule, the tree in the figure opposite is represented as: `afg^^c^bd^e^^^`.
 
 Write functions `string_of_tree : char mult_tree -> string` to construct the string representing the tree and `tree_of_string : string -> char mult_tree` to construct the tree when the string is given.
 
