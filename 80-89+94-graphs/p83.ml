@@ -8,21 +8,9 @@ Write a function s_tree g to construct (by backtracking) all spanning trees of a
 
 *)
 
-module CharMap = Map.Make (Char)
-module CharSet = Set.Make (Char)
+open Graph
 
-type adj_graph = char list CharMap.t
-
-
-let g1 = 
-  CharMap.add 'g' ['h'] (
-    CharMap.add 'h' ['g'] (
-      CharMap.add 'b' ['f';'c'] (
-	CharMap.add 'c' ['f';'b'] (
-	  CharMap.add 'f' ['k';'b';'c'] (
-	    CharMap.add 'k' ['f'] (
-	      CharMap.singleton 'd' []))))))
-
+module CharGraph = Adj_graph (Char)
 
 
 	
