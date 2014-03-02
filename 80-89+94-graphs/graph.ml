@@ -15,9 +15,10 @@ let edge_clause_to_graph_term l =
 
 let ec = ['h', 'g';  'k', 'f';  'f', 'b';  'f', 'c';  'c', 'b']
 
-module type OrderedType =
+module type NodeEdgeType =
 sig
   type t
+  type et
   val compare: t -> t -> int
 end
 
@@ -30,12 +31,12 @@ end
 
 end*)
 
-module Adj_graph (Ord:OrderedType) = struct 
+module Make_adj (Ne:NodeEdgeType) = struct 
     
-  include Map.Make(Ord)
+  include Map.Make(Ne)
   
-  type nt = Ord.t
-  type gt = nt list t
+  type nt = Ne.t
+  type gt = Ne.et t
   
   let create_adjacency l = List.fold_left (fun g (x,xl) -> add x xl g) (empty) l
 end 
