@@ -8,36 +8,24 @@ Write a function s_tree g to construct (by backtracking) all spanning trees of a
 
 *)
 
-module CharWeighted = struct 
-  type t = char
-  type et = (char * int) list
-  let compare = compare
-end
-
-module CharWGraph = Graph.Make_adj (CharWeighted)
-module Marker = Set.Make (Char)
+type 'a graph = { nodes : 'a list; edges : ('a * 'a) list }
 
 let s_tree g =
-  if CharWGraph.is_empty g then []
-  else 
-    let rec collect s m = 
-      if Marker.mem s then []
-      else 
-	let m = Marker.add s m in
-	let ts, m = List.fold_left (fun (acc,m) x -> (collect (fst x) m):acc) ([],m) (CharWGraph.find s g) in
-	List.map (fun x -> s::x) ts, m
-    in 
-    
+  let v = List.length (g.nodes) in
+  let add_edge l (x,y) = 
+    if List.mem x l && List.mem y l then l
+    else if List.mem x l then y::l
+    else if List.mem y l then x::l
+    else x::y::l
+  in 
+  
 
 
 let g1 = 
-  CharWGraph.add 'a' ['d',0;'b',0] (
-    CharWGraph.add 'b' ['a',0;'c',0;'e',0] (
-      CharWGraph.add 'c' ['b',0;'e',0] (
-	CharWGraph.add 'd' ['a',0;'e',0] (
-	  CharWGraph.add 'e' ['b',0;'c',0;'d',0] (
-	    CharWGraph.add 'f' ['d',0;'g',0] (
-	      CharWGraph.add 'g' ['d',0;'f',0;'h',0] (
-		CharWGraph.singleton 'h' ['e',0;'g',0])))))))
-	
+  { nodes = ['a'; 'b'; 'c'; 'd'; 'e'; 'f'; 'g'; 'h'];
+    edges = [('a', 'b'); ('a', 'd'); ('b', 'c'); ('b', 'e');
+             ('c', 'e'); ('d', 'e'); ('d', 'f'); ('d', 'g');
+             ('e', 'h'); ('f', 'g'); ('g', 'h')] }
 
+	
+ 
