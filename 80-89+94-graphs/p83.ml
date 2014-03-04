@@ -12,12 +12,8 @@ type 'a graph = { nodes : 'a list; edges : ('a * 'a) list }
 
 let s_tree g =
   let v = List.length (g.nodes) in
-  let add_edge l (x,y) = 
-    if List.mem x l && List.mem y l then l
-    else if List.mem x l then y::l
-    else if List.mem y l then x::l
-    else x::y::l
-  in 
+  let half_in_tree (x,y) l = (List.mem x l && not (List.mem y l)) || (List.mem y l && not (List.mem x l)) in
+  let rec collect vl edges  
   
 
 
