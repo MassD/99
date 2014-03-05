@@ -8,7 +8,7 @@ Write a predicate that finds out whether a given graph is bipartite
 
 type 'a grpah = { nodes: 'a list; edges: ('a * 'a) list}
 
-let neighbours v es =
+let neighbours es v =
   let rec collect acc = function
   | [] -> acc
   | (x,y)::tl -> 
@@ -17,30 +17,46 @@ let neighbours v es =
     else collect acc tl
   in 
   collect [] es
+
+let rev_concat_map f l = List.fold_left (fun acc x -> List.rev_append (f x) acc) [] l
+
+let (--) l1 l2 = List.filter (fun x -> not (List.mem x l2)) l1
+
+let is_overlap l1 l2 = List.filter (fun x -> List.mem x l2) l1 |> List.length > 0
+
+let rm_dup l =
+  let rec aux acc = function
+    | [] -> acc
+    | hd::(hd'::_ as tl) when hd = hd' -> aux acc tl
+    | hd::tl -> aux (hd::acc) tl
+  in 
+  List.sort compare l |> aux []
 	
 let bipartite g =
-  let rec breath_fst s (m, (p1,p2)) = 
-    if List.mem s m then m,(p1,p2)
-    else List.fold_left (fun (m,(p1,p2)) x -> travel x (m,(p2,p1))) (s::m,(s::p1,p2)) (neighbours s g.edges)
+  let rec breath_fst vs p q = 
+    let nvs = (rev_concat_map (neighbours g.edges) vs |> rm_dup) -- p in
+    if nvs = [] then Some (p,q)
+    else if is_overlap nvs q then None
+    else breath_fst nvs q (List.rev_append nvs p)
   in 
-  travel v ([],[]) |> snd |> List.sort compare
+  let vs = [List.hd g.nodes] in
+  breath_fst vs [] vs
 
-let bipartite g =
   
 
 let g1 = 
   {
-    nodes = ['a';'b';'c';'d';'e';'f';'g';'h';'i';'j';'k'];
-    edges = ['a','b';
+    nodes = ['a';'b';'c';'d';'e';'f';'g';'h'];
+    edges = ['a','f';
 	     'a','h';
-	     'c','d';
-	     'e','f';
-	     'g','h';
-	     'g','k';
-	     'h','i';
-	     'h','j';
-	     'i','j';
-	     'j','k']
+	     'b','e';
+	     'b','g';
+	     'c','f';
+	     'c','h';
+	     'd','h';
+	     'e','a';
+	     'e','f'
+	    ]
   }
     
     
