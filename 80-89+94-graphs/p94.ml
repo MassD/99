@@ -6,7 +6,46 @@ In a K-regular graph all nodes have a degree of K; i.e. the number of edges inci
 
 *)
 
+(* for isomorphism *)
+
+type 'a graph = {nodes : 'a list;
+		 edges : ('a * 'a) list
+		}
+
+let rev_concat_map f l = List.fold_left (fun acc x -> List.rev_append (f x) acc) [] l
+
+let (--) l x = List.filter ((<>)x) l
+
+let rec permutation = function
+  | [] -> []
+  | x::[] -> [[x]]
+  | l -> rev_concat_map (fun x -> List.map (fun y -> x::y) (permutation (l--x))) l
+
+let mappings l1 l2 = permutation l2 |> List.map (List.combine l1)
+
+let f mapping x = List.assoc x mapping
+
+let is_isomorphism g1 g2 =
+  if List.length g1.nodes = List.length g2.nodes && List.length g1.edges = List.length g2.edges then 
+    let ms = mappings g1.nodes g2.nodes in
+    let test m (a,b) es2 = List.mem (f m a, f m b) es2 in
+    let rec test_all m es2 = function
+      | [] -> true
+      | e::es1 -> test m e es2 && test_all m es2 es1
+    in 
+    let rec test_all_mappings = function
+      | [] -> false
+      | m::ms -> test_all m g2.edges g1.edges || test_all_mappings ms
+    in 
+    test_all_mappings ms
+  else 
+    false
+
+(* for k-regular *)
+
 let rev_concat_map f l = List.fold_left (fun acc x -> List.rev_append (f l) acc) l
+
+let singleton l = List.map (fun x -> (x,[])) l
 
 let rec pick m = function
   | [] -> []
