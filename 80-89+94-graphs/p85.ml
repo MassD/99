@@ -28,7 +28,7 @@ let f mapping x = List.assoc x mapping
 let is_isomorphism g1 g2 =
   if List.length g1.nodes = List.length g2.nodes && List.length g1.edges = List.length g2.edges then 
     let ms = mappings g1.nodes g2.nodes in
-    let test m (a,b) es2 = List.mem (f m a, f m b) es2 in
+    let test m (a,b) es2 = List.mem (f m a, f m b) es2 || List.mem (f m b, f m a) es2 in
     let rec test_all m es2 = function
       | [] -> true
       | e::es1 -> test m e es2 && test_all m es2 es1
@@ -48,3 +48,7 @@ let g1 = {nodes = [1;2;3];
 let g2 = {nodes = ['a';'b';'c'];
 	  edges = ['a','c';'b','c']
 	 }
+
+let g3 = {nodes = [1; 2; 3; 4]; edges = [(1, 2); (1, 3); (2, 4); (3, 4)]}
+
+let g4 = {nodes = [1; 2; 3; 4]; edges = [(1, 2); (1, 4); (2, 3); (3, 4)]}

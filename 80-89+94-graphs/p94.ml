@@ -19,16 +19,16 @@ let (--) l x = List.filter ((<>)x) l
 let rec permutation = function
   | [] -> []
   | x::[] -> [[x]]
-  | l -> rev_concat_map (fun x -> List.map (fun y -> x::y) (permutation (l--x))) l
+  | l -> rev_concat_map (fun x -> List.rev_map (fun y -> x::y) (permutation (l--x))) l
 
-let mappings l1 l2 = permutation l2 |> List.map (List.combine l1)
+let mappings l1 l2 = permutation l2 |> List.rev_map (List.combine l1)
 
 let f mapping x = List.assoc x mapping
 
 let is_isomorphism g1 g2 =
   if List.length g1.nodes = List.length g2.nodes && List.length g1.edges = List.length g2.edges then 
     let ms = mappings g1.nodes g2.nodes in
-    let test m (a,b) es2 = List.mem (f m a, f m b) es2 in
+    let test m (a,b) es2 = List.mem (f m a, f m b) es2 || List.mem (f m b, f m a) es2 in
     let rec test_all m es2 = function
       | [] -> true
       | e::es1 -> test m e es2 && test_all m es2 es1
@@ -61,7 +61,7 @@ let singleton l = List.rev_map (fun x -> (x,[])) l
 
 let rec pick m = function
   | [] -> []
-  | l when m = 1 -> List.map (fun x -> [x]) l
+  | l when m = 1 -> List.rev_map (fun x -> [x]) l
   | hd::tl -> List.map (fun x -> hd::x) (pick (m-1) tl) @ pick m tl
 
 let rec is_valid k v nvs es = function
@@ -120,3 +120,7 @@ let k_regular n k =
 let nl = [1;2;3]
 let k = 2
 let s = singleton nl
+
+let g1 = {nodes = [1; 2; 3; 4]; edges = [(1, 2); (1, 3); (2, 4); (3, 4)]}
+
+let g2 = {nodes = [1; 2; 3; 4]; edges = [(1, 2); (1, 4); (2, 3); (3, 4)]}
