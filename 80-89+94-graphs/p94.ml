@@ -43,38 +43,80 @@ let is_isomorphism g1 g2 =
 
 (* for k-regular *)
 
-let rev_concat_map f l = List.fold_left (fun acc x -> List.rev_append (f l) acc) l
+let rev_concat_map f l = List.fold_left (fun acc x -> List.rev_append (f x) acc) [] l
 
-let singleton l = List.map (fun x -> (x,[])) l
+let rm_dup f l =
+  let rec rm x acc = function
+    | [] -> List.rev acc
+    | hd::tl when f x hd -> rm x acc tl
+    | hd::tl -> rm x (hd::acc) tl 
+  in 
+  let rec collect acc = function
+    | [] -> List.rev acc
+    | hd::tl -> collect (hd::acc) (rm hd [] tl)
+  in 
+  collect [] l
+
+let singleton l = List.rev_map (fun x -> (x,[])) l
 
 let rec pick m = function
   | [] -> []
   | l when m = 1 -> List.map (fun x -> [x]) l
   | hd::tl -> List.map (fun x -> hd::x) (pick (m-1) tl) @ pick m tl
 
-let rec check_endpoint k v es = function
+let rec is_valid k v nvs es = function
   | [] -> true
+  | hd::tl when List.mem hd nvs -> false
   | hd::tl -> 
     let l = List.assoc hd es in
-    (not (List.mem v l)) && List.length l < k && check_endpoint k v es tl
+    (not (List.mem v l)) && 1+(List.length l) <= k && is_valid k v nvs es tl
 
 let link v p es = 
-  let rec create_es acc = function
-    | [] -> acc
-    | (x,ys)::tl when List.mem x p -> create_es ((x,v::ys)::acc) tl
-    | e::tl -> create_es (e::acc) tl
-  in 
-  (create_es [] es)
+  List.fold_left (
+    fun acc (x,ys) ->
+      if x = v then (v,List.rev_append ys p)::acc
+      else if List.mem x p then (x,v::ys)::acc
+      else (x,ys)::acc
+  ) [] es
   
-
-let k_regular l k =
-  if k > List.length l - 1 then []
+let add l k v es =
+  let nvs = List.assoc v es in
+  let nvs_len = List.length nvs in
+  if nvs_len = k then [es]
   else 
-    let rec build es = function
-      | [] -> []
+    let picks = pick (k-nvs_len) (l--v) |> List.filter (fun p -> is_valid k v nvs es p) 
+    in
+    List.rev_map (fun p -> link v p es) picks
+
+let create_edges l =
+  let sl = List.sort compare l in
+  let rec collect acc = function
+    | [] -> List.sort compare acc
+    | (x,ys)::tl -> collect (List.fold_left (fun acc y -> if List.mem (x,y) acc || List.mem (y,x) acc then acc else (x,y)::acc) acc ys) tl
+  in 
+  collect [] sl
+
+let dummy_nl n =
+  let rec collect acc k =
+    if k = 0 then acc
+    else collect (k::acc) (k-1)
+  in 
+  collect [] n
+
+let k_regular n k =
+  if k > n - 1 then 0
+  else 
+    let l = dummy_nl n in
+    let rec build ess = function
+      | [] -> ess
       | v::vs ->
-	let picks = pick k l |> List.filter (fun p -> check_endpoint k v es p) in
-	rev_concat_map (fun p -> build (link v p es) vs) picks
+	build (rev_concat_map (add l k v) ess) vs
     in 
-    build (List.map (fun x -> x,[])) l
-	
+    build [singleton l] l |> List.rev_map (fun x -> {nodes=l;edges=create_edges x}) |> rm_dup is_isomorphism |> List.length
+
+
+
+
+let nl = [1;2;3]
+let k = 2
+let s = singleton nl
