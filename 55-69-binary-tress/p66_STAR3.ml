@@ -10,6 +10,27 @@ Hint: Consider the horizontal distance between a node and its successor nodes. H
 
 *)
 
+(*
+  
+  The rules are like this:
+  
+  1. Assume for any subtree, if root's x-axis is x, then its left must be at least x-1 (towards further left) and right must be at least x+1 (towards further right)
+  2. On the same level, the diff of Xs of any pair of nodes must be at least 2 ((x+1)-(x-1)=2)
+  3. On the same level, if the diff of two nodes are less than 2, then left one will move to left and right one will move to right by the same amount until their distance is at least 2
+  4. In a tree, for a root, only the right path of its left child and left path of its right child may clash with each other on same levels.
+
+
+  Algorithm:
+
+  1. start from the root, assign temporary x to root, then left child x-1 and right child x+1. The very root at level 0's x = 0
+  2. After tagging the tree like above, we wider the tree
+  3. for any root, we wider its left and right, and then check whether left and right clash
+  4. For checking the clashes of left and right, basically, we travel along the right path of left and left path of right, see whether on one level, any two nodes' Xs have distance less than 2
+  5. If there are two such nodes, then move the whole left tree to left by shift value, and move the whole right tree to right by shift value
+  6. After widering done, we get the left most node's x, then move the whole tree to right by (-x)
+
+*)
+
 type 'a btree = Empty | Node of 'a * 'a btree * 'a btree
 
 type 'a pos_binary_tree =
