@@ -186,7 +186,7 @@ The selected items shall be returned in a list. We use the Random module but do 
     # rand_select ["a";"b";"c";"d";"e";"f";"g";"h"] 3;;
     - : string list = ["g"; "d"; "a"]
 
-**This problem is actually quite hard if you really want to finish it correctly**
+*This problem is actually quite hard if you really want to finish it correctly*
 
 ##### 24. Lotto: Draw N different random numbers from the set 1..M. (easy)
 
