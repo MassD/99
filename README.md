@@ -275,7 +275,7 @@ Construct a flat list containing the prime factors in ascending order.
     # factors 315;;
     - : int list = [3; 3; 5; 7]
 	
-#### 36. Determine the prime factors of a given positive integer (2). (medium)
+##### 36. Determine the prime factors of a given positive integer (2). (medium)
 
 Construct a list containing the prime factors and their multiplicity. Hint: The problem is similar to problem Run-length encoding of a list (direct solution).
 
